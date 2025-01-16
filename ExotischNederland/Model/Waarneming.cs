@@ -92,9 +92,25 @@ internal class Waarneming
 
     public override string ToString()
     {
-        // Verbeter later: hoe manierDelen getoond wordt.
-        // hoe waarnemer, afbeelding, waarnemingLocatie en
-        // waarnemingSoort getoond worden
+        // Verbeter later:
+        // hoe waarnemer, afbeelding, waarnemingLocatie en waarnemingSoort getoond worden
+        string manierVanDelen;
+        switch (_manierDelen)
+        {
+            case 'n':
+                manierVanDelen = "Niet delen";
+                break;
+            case 'v':
+                manierVanDelen = "Vertrouwde personen";
+                break;
+            case 'o':
+                manierVanDelen = "Open";
+                break;
+            default:
+                throw new FormatException(
+                    $"{this}.ToString() - Ongeldige karakter in _manierDelen: {_manierDelen}");
+        }
+
         return $"""
                 ID: {_id}
                 Aantal: {_aantal}
@@ -102,8 +118,8 @@ internal class Waarneming
                 Toelichting: {_toelichting}
                 Datum: {_datum}
                 Tijd: {_tijd}
-                Geslacht: {(_geslacht == 'M' ? "Male" : "Female")}
-                Manier van delen: {_manierDelen}
+                Geslacht: {(_geslacht == 'm' ? "Male" : "Female")}
+                Manier van delen: {manierVanDelen}
                 Zekerheid: {(_zekerheid ? "Zeker" : "Onzeker")}
                 Afbeelding toegevoegd: {(_afbeelding != null ? "Ja" : "Nee")}
                 """;
