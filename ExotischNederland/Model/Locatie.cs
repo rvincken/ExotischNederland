@@ -42,7 +42,15 @@ internal class Locatie
     {
         _id = id;
         _locatienaam = locatienaam;
-        _provincie = provincie;
+
+        if (IsValidProvincie(provincie))
+        {
+            _provincie = provincie;
+        }
+        else
+        {
+            throw new ArgumentException("Provincie is niet geldig.");
+        }
         _breedtegraad = breedtegraad;
         _lengtegraad = lengtegraad;
     }
@@ -57,6 +65,39 @@ internal class Locatie
         {
             throw new ArgumentException("Locatienaam mag geen getallen bevatten.");
         }
+    }
+
+    public void WijzigProvincie(string provincie)
+    {
+        if (IsValidProvincie(provincie))
+        {
+            _provincie = provincie;
+        }
+        else
+        {
+            throw new ArgumentException("Provincie is niet geldig.");
+        }
+    }
+
+    private bool IsValidProvincie(string provincie)
+    {
+        List<String> provincieNamen = new List<String>
+        {
+            "Drenthe",
+            "Flevoland",
+            "Friesland",
+            "Gelderland",
+            "Groningen",
+            "Limburg",
+            "Noord-Brabant",
+            "Noord-Holland",
+            "Overijssel",
+            "Utrecht",
+            "Zeeland",
+            "Zuid-Holland"
+        };
+
+        return provincieNamen.Contains(provincie);
     }
 
     private bool IsValidName(string locatienaam)
