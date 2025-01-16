@@ -26,7 +26,7 @@ internal class Gebruiker
             else
             {
                 throw new ArgumentException(
-                    $"{this}.Geslacht kan alleen 'm'/'v' zijn," +
+                    $"{this}.Geslacht kan alleen 'm'/'v' zijn, " +
                     $"maar een waarde van {value} is gegeven.");
             }
         }
@@ -44,7 +44,7 @@ internal class Gebruiker
             else
             {
                 throw new ArgumentException(
-                    $"{this}.Taal kan alleen 'nl'/'en' zijn," +
+                    $"{this}.Taal kan alleen 'nl'/'en' zijn, " +
                     $"maar een waarde van {value} is gegeven.");
             }
         }
@@ -62,8 +62,8 @@ internal class Gebruiker
             else
             {
                 throw new ArgumentException(
-                    $"{this}.Email kan alleen een geldig adres zijn," +
-                    $"Maar een waarde van {value} is gegeven.");
+                    $"{this}.Email kan alleen een geldig adres zijn, " +
+                    $"maar een waarde van {value} is gegeven.");
             }
 
         }
