@@ -118,8 +118,8 @@ internal class Waarneming
                 Toelichting: {_toelichting}
                 Datum: {_datum}
                 Tijd: {_tijd}
-                Geslacht: {(_geslacht == 'm' ? "Male" : "Female")}
                 Manier van delen: {manierVanDelen}
+                Geslacht: {(_geslacht == 'm' ? "Male" : "Female")}
                 Zekerheid: {(_zekerheid ? "Zeker" : "Onzeker")}
                 Afbeelding toegevoegd: {(_afbeelding != null ? "Ja" : "Nee")}
                 """;
