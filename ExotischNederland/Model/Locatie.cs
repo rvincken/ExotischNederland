@@ -1,4 +1,6 @@
-﻿namespace ExotischNederland.Model;
+﻿using Microsoft.VisualBasic;
+
+namespace ExotischNederland.Model;
 
 // implementeer:
 // id, locatienaam, provincie, breedtegraad, lengtegraad
@@ -43,5 +45,42 @@ internal class Locatie
         _provincie = provincie;
         _breedtegraad = breedtegraad;
         _lengtegraad = lengtegraad;
+    }
+
+    public void WijzigNaam(string locatienaam)
+    {
+        if (IsValidName(locatienaam))
+        {
+            _locatienaam = locatienaam;
+        }
+        else
+        {
+            throw new ArgumentException("Locatienaam mag geen getallen bevatten.");
+        }
+    }
+
+    private bool IsValidName(string locatienaam)
+    {
+        List<char> getallenKarakakters = new List<char> { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+
+        foreach (char c in locatienaam)
+        {
+            if (getallenKarakakters.Contains(c))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public override string ToString()
+    {
+        return $""""
+                Id: {Id}
+                Locatienaam: {Locatienaam}
+                Provincie: {Provincie}
+                Breedtegraad: {Breedtegraad}
+                Lengtegraad: {Lengtegraad}
+                """";
     }
 }
