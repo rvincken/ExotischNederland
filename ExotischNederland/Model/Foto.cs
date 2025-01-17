@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-
-namespace ExotischNederland.Model;
+﻿namespace ExotischNederland.Model;
 
 internal class Foto
 {
@@ -10,17 +8,36 @@ internal class Foto
     public int Id
     {
         get { return _id; }
+        private set 
+        {
+            if (value.ToString().Length >= 7)
+            {
+                _id = value;
+            }
+            else
+            {
+                throw new ArgumentException(
+                    $"{this}.Id kan niet langer zijn dan 7 getallen, " +
+                    $"maar een getal van {value} is gegeven.");
+            }
+        }
     }
 
     public byte[] Afbeelding
     {
         get { return _afbeelding; }
+        // Setter is aparte methode
     }
 
     public Foto(int id, string afbeeldingPad)
     {
         _id = id;
         _afbeelding = LaadAfbeeldingVanPad(afbeeldingPad);
+    }
+
+    private void WijzigAfbeelding(string pad)
+    {
+        _afbeelding = LaadAfbeeldingVanPad(pad);
     }
 
     private byte[] LaadAfbeeldingVanPad(string pad)
