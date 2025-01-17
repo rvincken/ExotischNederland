@@ -51,8 +51,24 @@ internal class Locatie
         {
             throw new ArgumentException("Provincie is niet geldig.");
         }
-        _breedtegraad = breedtegraad;
-        _lengtegraad = lengtegraad;
+
+        if (IsValidCoordinate(breedtegraad))
+        {
+            _breedtegraad = breedtegraad;
+        }
+        else
+        {
+            throw new ArgumentException("Breedtegraad moet exact 6 decimalen hebben.");
+        }
+
+        if (IsValidCoordinate(lengtegraad))
+        {
+            _lengtegraad = lengtegraad;
+        }
+        else
+        {
+            throw new ArgumentException("Lengtegraad moet exact 6 decimalen hebben.");
+        }
     }
 
     public void WijzigNaam(string locatienaam)
@@ -112,6 +128,13 @@ internal class Locatie
             }
         }
         return true;
+    }
+
+    private bool IsValidCoordinate(double coordinate)
+    {
+        double afgerond = Math.Round(coordinate, 6);
+
+        return Math.Abs(coordinate - afgerond) < 1e-7;
     }
 
     public override string ToString()
