@@ -1,4 +1,6 @@
-﻿namespace ExotischNederland.Model;
+﻿using System.Globalization;
+
+namespace ExotischNederland.Model;
 
 internal class Waarneming
 {
@@ -21,14 +23,14 @@ internal class Waarneming
         get { return _id; }
         private set 
         {
-            if (value.ToString().Length <= 7)
+            if (value.ToString().Length == 7)
             {
                 _id = value;
             }
             else
             {
                 throw new ArgumentException(
-                    $"{this}.Id kan niet langer zijn dan 7 getallen, " +
+                    $"Waarneming.Id moet 7 getallen lang zijn, " +
                     $"Maar een getal van {value} is gegeven.");
             }
         }
@@ -45,7 +47,7 @@ internal class Waarneming
             else
             {
                 throw new ArgumentException(
-                    $"{this}.Aantal kan niet langer zijn dan 7 getallen, " +
+                    $"Waarneming.Aantal kan niet langer zijn dan 7 getallen, " +
                     $"Maar een getal van {value} is gegeven.");
             }
         }
@@ -62,7 +64,7 @@ internal class Waarneming
             else
             {
                 throw new ArgumentException(
-                    $"{this}.Omschrijving kan niet langer zijn dan 200 karakters, " +
+                    $"Waarneming.Omschrijving kan niet langer zijn dan 200 karakters, " +
                     $"Maar een string van:\n{value}\n... is gegeven.");
             }
         }
@@ -79,7 +81,7 @@ internal class Waarneming
             else
             {
                 throw new ArgumentException(
-                    $"{this}.Toelichting kan niet langer zijn dan 200 karakters, " +
+                    $"Waarneming.Toelichting kan niet langer zijn dan 200 karakters, " +
                     $"Maar een string van:\n{value}\n... is gegeven.");
             }
         }
@@ -87,12 +89,38 @@ internal class Waarneming
     public string Datum
     {
         get { return _datum; }
-        private set { _datum = value; }
+        private set
+        {
+            string dateFormat = "dd/MM/yyyy";
+            if (IsValidDateOrTime(value, dateFormat))
+            {
+                _datum = value;
+            }
+            else
+            {
+                throw new ArgumentException(
+                    $"Waarneming.Datum moet een geldige datum zijn (dd/MM/yyyy), " +
+                    $"maar een string van {value} is gegeven.");
+            }
+        }
     }
     public string Tijd
     {
         get { return _tijd; }
-        private set { _tijd = value; }
+        private set
+        {
+            string timeFormat = "HH/mm";
+            if ( IsValidDateOrTime(value, timeFormat))
+            {
+                _tijd = value;
+            }
+            else
+            {
+                throw new ArgumentException(
+                    $"Waarneming.Tijd moet een geldige tijd zijn (HH/mm), " +
+                    $"maar een string van {value} is gegeven.");
+            }
+        }
     }
     public char Geslacht
     {
@@ -107,7 +135,7 @@ internal class Waarneming
             else
             {
                 throw new ArgumentException(
-                    $"{this}.Geslacht kan alleen 'm'/'f' zijn, " +
+                    $"Waarneming.Geslacht kan alleen 'm'/'f' zijn, " +
                     $"maar een waarde van {value} is gegeven.");
             }
         }
@@ -120,12 +148,12 @@ internal class Waarneming
             value = Char.ToLower(value);
             if (value == 'n' || value == 'v' || value == 'o')
             {
-                _geslacht = value;
+                _manierDelen = value;
             }
             else
             {
                 throw new ArgumentException(
-                    $"{this}.ManierDelen kan alleen 'n'/'v'/'o' zijn, " +
+                    $"Waarneming.ManierDelen kan alleen 'n'/'v'/'o' zijn, " +
                     $"maar een waarde van {value} is gegeven.");
             }
         }
@@ -177,6 +205,16 @@ internal class Waarneming
         WaarnemingSoort = waarnemingSoort;
     }
 
+    private bool IsValidDateOrTime(string value, string format)
+    {
+        return DateTime.TryParseExact(
+            value,
+            format,
+            CultureInfo.InvariantCulture,
+            DateTimeStyles.None,
+            out _);
+    }
+
     public override string ToString()
     {
         // Verbeter later:
@@ -209,6 +247,9 @@ internal class Waarneming
                 Geslacht: {(Geslacht == 'm' ? "Male" : "Female")}
                 Zekerheid: {(Zekerheid ? "Zeker" : "Onzeker")}
                 Afbeelding toegevoegd: {(Afbeelding != null ? "Ja" : "Nee")}
+                Waarnemer toegevoegd: {(Waarnemer != null ? "Ja" : "Nee")}
+                Locatie toegevoegd: {(WaarnemingLocatie != null ? "Ja" : "Nee")}
+                Soort toegevoegd: {(WaarnemingSoort != null ? "Ja" : "Nee")}
                 """;
     }
 }
