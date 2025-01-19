@@ -31,8 +31,14 @@ internal class Foto
 
     public Foto(int id, string afbeeldingPad)
     {
-        _id = id;
+        Id = id;
         _afbeelding = LaadAfbeeldingVanPad(afbeeldingPad);
+    }
+
+    public Foto(int id, byte[] afbeeldingBytes)
+    {
+        Id = id;
+        _afbeelding = afbeeldingBytes;
     }
 
     private void WijzigAfbeelding(string pad)
