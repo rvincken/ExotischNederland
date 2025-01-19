@@ -10,14 +10,14 @@ internal class Foto
         get { return _id; }
         private set 
         {
-            if (value.ToString().Length >= 7)
+            if (value.ToString().Length == 7)
             {
                 _id = value;
             }
             else
             {
                 throw new ArgumentException(
-                    $"{this}.Id kan niet langer zijn dan 7 getallen, " +
+                    $"{this}.Id moet 7 getallen lang zijn, " +
                     $"maar een getal van {value} is gegeven.");
             }
         }
