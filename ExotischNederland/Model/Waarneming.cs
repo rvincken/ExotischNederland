@@ -8,10 +8,10 @@ internal class Waarneming
     private string _omschrijving;
     private string _datum;
     private string _tijd;
-    private Gebruiker _waarnemer;
-    private Foto _afbeelding;
-    private Locatie _waarnemingLocatie;
-    private Soort _waarnemingSoort;
+    private int _waarnemerId;
+    private int _fotoId;
+    private int _locatieId;
+    private int _soortId;
 
     public int Id
     {
@@ -84,41 +84,89 @@ internal class Waarneming
             }
         }
     }
-    public Gebruiker Waarnemer
+    public int WaarnemerId
     {
-        get { return _waarnemer; }
-        private set { _waarnemer = value; }
+        get { return _waarnemerId; }
+        private set
+        {
+            if (value.ToString().Length == 7)
+            {
+                _waarnemerId = value;
+            }
+            else
+            {
+                throw new ArgumentException(
+                    $"Waarneming.WaarnemerId moet 7 getallen lang zijn, " +
+                    $"Maar een getal van {value} is gegeven.");
+            }
+        }
     }
-    public Foto Afbeelding
+    public int FotoId
     {
-        get { return _afbeelding; }
-        private set { _afbeelding = value; }
+        get { return _fotoId; }
+        private set
+        {
+            if (value.ToString().Length == 7)
+            {
+                _fotoId = value;
+            }
+            else
+            {
+                throw new ArgumentException(
+                    $"Waarneming.FotoId moet 7 getallen lang zijn, " +
+                    $"Maar een getal van {value} is gegeven.");
+            }
+        }
     }
-    public Locatie WaarnemingLocatie
+    public int LocatieId
     {
-        get { return _waarnemingLocatie; }
-        private set { _waarnemingLocatie = value; }
+        get { return _locatieId; }
+        private set
+        {
+            if (value.ToString().Length == 7)
+            {
+                _locatieId = value;
+            }
+            else
+            {
+                throw new ArgumentException(
+                    $"Waarneming.LocatieId moet 7 getallen lang zijn, " +
+                    $"Maar een getal van {value} is gegeven.");
+            }
+        }
     }
-    public Soort WaarnemingSoort
+    public int SoortId
     {
-        get { return _waarnemingSoort; }
-        private set { _waarnemingSoort = value; }
+        get { return _soortId; }
+        private set
+        {
+            if (value.ToString().Length == 7)
+            {
+                _soortId = value;
+            }
+            else
+            {
+                throw new ArgumentException(
+                    $"Waarneming.SoortId moet 7 getallen lang zijn, " +
+                    $"Maar een getal van {value} is gegeven.");
+            }
+        }
     }
 
     public Waarneming
         (int id, int aantal, string omschrijving, string toelichting,
         string datum, string tijd, char geslacht, char manierDelen,
-        bool zekerheid, Gebruiker waarnemer, Foto afbeelding,
-        Locatie waarnemingLocatie, Soort waarnemingSoort)
+        bool zekerheid, int waarnemerId, int fotoId, int locatieId,
+        int soortId)
     {
         Id = id;
         Omschrijving = omschrijving;
         Datum = datum;
         Tijd = tijd;
-        Waarnemer = waarnemer;
-        Afbeelding = afbeelding;
-        WaarnemingLocatie = waarnemingLocatie;
-        WaarnemingSoort = waarnemingSoort;
+        WaarnemerId = waarnemerId;
+        FotoId = fotoId;
+        LocatieId = locatieId;
+        SoortId = soortId;
     }
 
     private bool IsValidDateOrTime(string value, string format)
@@ -133,17 +181,15 @@ internal class Waarneming
 
     public override string ToString()
     {
-        // Verbeter later:
-        // hoe waarnemer, afbeelding, waarnemingLocatie en waarnemingSoort getoond worden
         return $"""
                 ID: {Id}
                 Omschrijving: {Omschrijving}
                 Datum: {Datum}
                 Tijd: {Tijd}
-                Afbeelding toegevoegd: {(Afbeelding != null ? "Ja" : "Nee")}
-                Waarnemer toegevoegd: {(Waarnemer != null ? "Ja" : "Nee")}
-                Locatie toegevoegd: {(WaarnemingLocatie != null ? "Ja" : "Nee")}
-                Soort toegevoegd: {(WaarnemingSoort != null ? "Ja" : "Nee")}
+                Waarnemer ID: {WaarnemerId}
+                Foto ID: {FotoId}
+                Locatie ID: {LocatieId}
+                Soort ID: {SoortId}
                 """;
     }
 }
