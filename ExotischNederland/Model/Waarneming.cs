@@ -5,13 +5,13 @@ namespace ExotischNederland.Model;
 internal class Waarneming
 {
     private int _id;
-    private string _omschrijving;
-    private string _datum;
-    private string _tijd;
     private int _waarnemerId;
     private int _fotoId;
     private int _locatieId;
     private int _soortId;
+    private string _omschrijving;
+    private string _datum;
+    private string _tijd;
 
     public int Id
     {
@@ -154,10 +154,8 @@ internal class Waarneming
     }
 
     public Waarneming
-        (int id, int aantal, string omschrijving, string toelichting,
-        string datum, string tijd, char geslacht, char manierDelen,
-        bool zekerheid, int waarnemerId, int fotoId, int locatieId,
-        int soortId)
+        (int id, int fotoId, int waarnemerId, int locatieId, int soortId,
+        string omschrijving, string datum, string tijd)
     {
         Id = id;
         Omschrijving = omschrijving;
