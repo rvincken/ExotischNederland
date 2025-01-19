@@ -1,21 +1,35 @@
 ﻿namespace ExotischNederland.Model;
-//hallo
-// implementeer:
-// wetenschappelijke naam, soort naam, hoe vaak de soort voorkomt
 
 internal class Soort
 {
+    private int _id;
     private string _wetenschappelijkeNaam;
     private string _soortNaam;
     private int _hoeVaakDeSoortVoorkomt;
     private char _oorsprong;
+
+    public int Id
+    {
+        get { return _id; }
+        set
+        {
+            if (value.ToString().Length == 7)
+            {
+                _id = value;
+            }
+            else
+            {
+                throw new ArgumentException("soort id moet 7 getallen lang zijn");
+            }
+        }
+    }
 
     public string WetenschappelijkeNaam
     {
         get { return _wetenschappelijkeNaam; }
         set
         {
-            if (value.Length <=50)
+            if (value.Length <= 50)
             {
                 _wetenschappelijkeNaam = value;
              
@@ -48,13 +62,13 @@ internal class Soort
         get { return _hoeVaakDeSoortVoorkomt; }
         set
         {
-            if (value <= 50)
+            if (value < 0 || value > 1000000000)
             {
                 _hoeVaakDeSoortVoorkomt = value;
             }
             else
             {
-                throw new ArgumentException("de soort komt niet vaak voor");
+                throw new ArgumentException("hoe vaak de soort voorkomt is ongeldig");
             }
         }
     }
@@ -64,25 +78,27 @@ internal class Soort
         get { return _oorsprong; }
         set
         {
-            if (value <= 50)
+            value = char.ToLower(value);
+            if (value == 'e' || value == 'i')
             {
                 _oorsprong = value;
             }
             else
             {
-                throw new ArgumentException("oorsprong is niet bekend");
+                throw new ArgumentException("oorsprong moet exoot (e) of inheems (i) zijn");
             }
 
 
         }
     }
-    public Soort(string wetenschappelijkeNaam, string soortNaam, int hoeVaakDeSoortVoorkomt, char oorsprong )
+
+    public Soort(int id, string wetenschappelijkeNaam, string soortNaam, int hoeVaakDeSoortVoorkomt, char oorsprong)
     {
+        Id = id;
         WetenschappelijkeNaam = wetenschappelijkeNaam;
         SoortNaam = soortNaam;
         HoeVaakDeSoortVoorkomt = hoeVaakDeSoortVoorkomt ;
         Oorsprong = oorsprong;
-        
     }
 }
 
