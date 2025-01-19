@@ -2,9 +2,6 @@
 
 namespace ExotischNederland.Model;
 
-// implementeer:
-// id, locatienaam, provincie, breedtegraad, lengtegraad
-
 internal class Locatie
 {
     private int _id;
@@ -40,8 +37,23 @@ internal class Locatie
 
     public Locatie(int id, string locatienaam, string provincie, double breedtegraad, double lengtegraad)
     {
-        _id = id;
-        _locatienaam = locatienaam;
+        if (IsValidName(locatienaam))
+        {
+            _locatienaam = locatienaam;
+        }
+        else
+        {
+            throw new ArgumentException("Locatienaam bevat getallen of is langer dan 50 karakters.");
+        }
+
+        if (IsValidId(id))
+        {
+            _id = id;
+        }
+        else
+        {
+            throw new ArgumentException("Id is niet geldig.");
+        }
 
         if (IsValidProvincie(provincie))
         {
@@ -127,6 +139,12 @@ internal class Locatie
                 return false;
             }
         }
+
+        if (locatienaam.Length > 50)
+        {
+            return false;
+        }
+
         return true;
     }
 
@@ -135,6 +153,11 @@ internal class Locatie
         double afgerond = Math.Round(coordinate, 6);
 
         return Math.Abs(coordinate - afgerond) < 1e-7;
+    }
+
+    private bool IsValidId(int id)
+    {
+        return id.ToString().Length == 7;
     }
 
     public override string ToString()
