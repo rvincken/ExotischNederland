@@ -71,7 +71,7 @@ internal class Waarneming
         get { return _tijd; }
         private set
         {
-            string timeFormat = "HH/mm";
+            string timeFormat = "HH:mm";
             if ( IsValidDateOrTime(value, timeFormat))
             {
                 _tijd = value;
@@ -79,7 +79,7 @@ internal class Waarneming
             else
             {
                 throw new ArgumentException(
-                    $"Waarneming.Tijd moet een geldige tijd zijn (HH/mm), " +
+                    $"Waarneming.Tijd moet een geldige tijd zijn (HH:mm), " +
                     $"maar een string van {value} is gegeven.");
             }
         }
