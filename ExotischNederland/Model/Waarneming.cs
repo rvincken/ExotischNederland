@@ -5,14 +5,9 @@ namespace ExotischNederland.Model;
 internal class Waarneming
 {
     private int _id;
-    private int _aantal;
     private string _omschrijving;
-    private string _toelichting;
     private string _datum;
     private string _tijd;
-    private char _geslacht;
-    private char _manierDelen;
-    private bool _zekerheid;
     private Gebruiker _waarnemer;
     private Foto _afbeelding;
     private Locatie _waarnemingLocatie;
@@ -35,23 +30,7 @@ internal class Waarneming
             }
         }
     }
-    public int Aantal
-    {
-        get { return _aantal; }
-        private set
-        {
-            if (value.ToString().Length <= 7)
-            {
-                _aantal = value;
-            }
-            else
-            {
-                throw new ArgumentException(
-                    $"Waarneming.Aantal kan niet langer zijn dan 7 getallen, " +
-                    $"Maar een getal van {value} is gegeven.");
-            }
-        }
-    }
+
     public string Omschrijving
     {
         get { return _omschrijving; }
@@ -65,23 +44,6 @@ internal class Waarneming
             {
                 throw new ArgumentException(
                     $"Waarneming.Omschrijving kan niet langer zijn dan 200 karakters, " +
-                    $"Maar een string van:\n{value}\n... is gegeven.");
-            }
-        }
-    }
-    public string Toelichting
-    {
-        get { return _toelichting; }
-        private set
-        {
-            if (value.Length <= 200)
-            {
-                _toelichting = value;
-            }
-            else
-            {
-                throw new ArgumentException(
-                    $"Waarneming.Toelichting kan niet langer zijn dan 200 karakters, " +
                     $"Maar een string van:\n{value}\n... is gegeven.");
             }
         }
@@ -122,47 +84,6 @@ internal class Waarneming
             }
         }
     }
-    public char Geslacht
-    {
-        get { return _geslacht; }
-        private set
-        {
-            value = Char.ToLower(value);
-            if (value == 'm' || value == 'f')
-            {
-                _geslacht = value;
-            }
-            else
-            {
-                throw new ArgumentException(
-                    $"Waarneming.Geslacht kan alleen 'm'/'f' zijn, " +
-                    $"maar een waarde van {value} is gegeven.");
-            }
-        }
-    }
-    public char ManierDelen
-    {
-        get { return _manierDelen; }
-        private set
-        {
-            value = Char.ToLower(value);
-            if (value == 'n' || value == 'v' || value == 'o')
-            {
-                _manierDelen = value;
-            }
-            else
-            {
-                throw new ArgumentException(
-                    $"Waarneming.ManierDelen kan alleen 'n'/'v'/'o' zijn, " +
-                    $"maar een waarde van {value} is gegeven.");
-            }
-        }
-    }
-    public bool Zekerheid
-    {
-        get { return _zekerheid; }
-        private set { _zekerheid = value; }
-    }
     public Gebruiker Waarnemer
     {
         get { return _waarnemer; }
@@ -191,14 +112,9 @@ internal class Waarneming
         Locatie waarnemingLocatie, Soort waarnemingSoort)
     {
         Id = id;
-        Aantal = aantal;
         Omschrijving = omschrijving;
-        Toelichting = toelichting;
         Datum = datum;
         Tijd = tijd;
-        Geslacht = geslacht;
-        ManierDelen = manierDelen;
-        Zekerheid = zekerheid;
         Waarnemer = waarnemer;
         Afbeelding = afbeelding;
         WaarnemingLocatie = waarnemingLocatie;
@@ -219,33 +135,11 @@ internal class Waarneming
     {
         // Verbeter later:
         // hoe waarnemer, afbeelding, waarnemingLocatie en waarnemingSoort getoond worden
-        string manierVanDelen;
-        switch (ManierDelen)
-        {
-            case 'n':
-                manierVanDelen = "Niet delen";
-                break;
-            case 'v':
-                manierVanDelen = "Vertrouwde personen";
-                break;
-            case 'o':
-                manierVanDelen = "Open";
-                break;
-            default:
-                throw new FormatException(
-                    $"{this}.ToString() - Ongeldige karakter in _manierDelen: {_manierDelen}");
-        }
-
         return $"""
                 ID: {Id}
-                Aantal: {Aantal}
                 Omschrijving: {Omschrijving}
-                Toelichting: {Toelichting}
                 Datum: {Datum}
                 Tijd: {Tijd}
-                Manier van delen: {manierVanDelen}
-                Geslacht: {(Geslacht == 'm' ? "Male" : "Female")}
-                Zekerheid: {(Zekerheid ? "Zeker" : "Onzeker")}
                 Afbeelding toegevoegd: {(Afbeelding != null ? "Ja" : "Nee")}
                 Waarnemer toegevoegd: {(Waarnemer != null ? "Ja" : "Nee")}
                 Locatie toegevoegd: {(WaarnemingLocatie != null ? "Ja" : "Nee")}
