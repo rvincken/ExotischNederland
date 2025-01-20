@@ -83,7 +83,7 @@ internal class Locatie
         }
     }
 
-    public void WijzigNaam(string locatienaam)
+    private void WijzigNaam(string locatienaam)
     {
         if (IsValidName(locatienaam))
         {
@@ -95,7 +95,7 @@ internal class Locatie
         }
     }
 
-    public void WijzigProvincie(string provincie)
+    private void WijzigProvincie(string provincie)
     {
         if (IsValidProvincie(provincie))
         {
