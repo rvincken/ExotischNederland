@@ -11,7 +11,9 @@ internal class Gebruiker
     private int _geboortejaar;
     private long _telefoonnummer;
     private string _land;
-
+    private string _rol;
+    
+    
     public string Naam
     {
         get{return _naam;}
@@ -165,7 +167,7 @@ internal class Gebruiker
         get{return _id;}
         set
         {
-            if (Id.ToString().Length == 7)
+            if (value.ToString().Length == 7)
             {
                 _id = value;
             }
@@ -176,8 +178,23 @@ internal class Gebruiker
 
         }
     }
-    public Gebruiker(string naam, string taal, int geboortejaar, string land, string email, long telefoonnummer, string weergavenaam, char geslacht)
+
+    public string Rol
     {
+        get{return _rol;}
+        set
+        {
+            if (value == "vrijwilliger" || value == "medewerker")
+            {
+                _rol = value;
+            }
+                
+        }
+    }
+    public Gebruiker(int id, string rol, string naam, string taal, int geboortejaar, string land, string email, long telefoonnummer, string weergavenaam, char geslacht, string biografie)
+    {
+        Id = id;
+        Rol = rol;
         Naam = naam;
         Taal = taal;
         Geboortejaar = geboortejaar;
@@ -186,11 +203,13 @@ internal class Gebruiker
         Telefoonnummer = telefoonnummer;
         Weergavenaam = weergavenaam;
         Geslacht = geslacht;
+        Biografie = biografie;
     }
     public override string ToString()
     {
         return $"""
         ID: {Id}
+        Rol: {Rol}
         Naam: {Naam}
         Geslacht: {Geslacht}
         Geboortejaar: {Geboortejaar}
