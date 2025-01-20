@@ -10,92 +10,141 @@
              plantsoorten in het wild zoals gevraagd door de opdrachtgever.
 */
 
+using ExotischNederland.BusinessLayer;
 using ExotischNederland.Model;
 
 namespace ExotischNederland.PresentationLayer;
 
 internal class Program
 {
+    private static readonly SoortService soortService = new SoortService();
+    private static readonly FotoService fotoService = new FotoService();
+    private static readonly LocatieService locatieService = new LocatieService();
+    private static readonly GebruikerService gebruikerService = new GebruikerService();
+    private static readonly WaarnemingService waarnemingService = new WaarnemingService();
+
+    // Gebruik de functie NonNullInput in plaats van Console.ReadLine().
+    // Dit is om null-waarschuwingen te voorkomen.
+
     static void Main()
     {
-        Random rnd = new Random();
-        var soortService = new BusinessLayer.SoortService();
-        soortService.RegistreerSoort
-        (
-            rnd.Next(1000000, 9999999),
-            "anus sooartius",
-            "anusdier",
-            "plant",
-            "boom",
-            5,
-            'e'
-        );
-        var soorten = soortService.KrijgAlleSoorten();
-        foreach (var soort in soorten)
-        {
-            Console.WriteLine(soort.ToString());
-        }
+        Console.WriteLine("EXOTISCH NEDERLAND");
+        Console.WriteLine("------------------");
 
-        var gebruikerService = new BusinessLayer.GebruikerService();
-        gebruikerService.RegistreerGebruiker
+        Gebruiker gebruiker = Login();
+
+        bool blijfVragen = true;
+
+        while (blijfVragen)
+        {
+            Console.WriteLine("""
+                              Kies een actie:
+                              (1) Waarneming toevoegen
+                              (2) Waarnemingen bekijken
+                              (3) Stoppen
+                              """);
+            string actie = NonNullInput();
+
+            switch (actie)
+            {
+                case "1":
+                    if (gebruiker.Rol == "vrijwilliger" || gebruiker.Rol == "medewerker")
+                    {
+                        WaarnemingToevoegen(gebruiker);
+                    }
+                    else
+                    {
+                        Console.WriteLine("U heeft geen rechten om deze actie uit te voeren.");
+                    }
+                    break;
+                case "2":
+                    if (gebruiker.Rol == "medewerker")
+                    {
+                        WaarnemingenBekijken();
+                    }
+                    else
+                    {
+                        Console.WriteLine("U heeft geen rechten om deze actie uit te voeren.");
+                    }
+                    break;
+                case "3":
+                    Console.WriteLine("Bedankt voor het gebruiken van het Exotisch Nederland programma.");
+                    blijfVragen = false;
+                    break;
+                default:
+                    Console.WriteLine("Onbekende actie, probeer alsjeblieft opnieuw.");
+                    break;
+            }
+        }
+    }
+
+    static Gebruiker Login()
+    {
+        // Implementeer login-systeem.
+        // Deze return is tijdelijk totdat login is afgemaakt.
+        // Na implementatie van Login(), verwijder deze.
+        // Verwijder ook Random rnd, tenzij je deze wilt gebruiken.
+        Random rnd = new Random();
+        return new Gebruiker
         (
             rnd.Next(1000000, 9999999),
-            "vrijwilliger",
+            "medewerker",
             "sjaak sjaak",
-            "en",
-            1963,
-            "listenbourg",
-            "@",
+            "nl",
+            2000,
+            "nederland",
+            "email@email.com",
             1234567890,
             "sjaakdegoat",
             'm',
             "ik was geboren vanaf een heel jonge leeftijd"
         );
-        var gebruikers = gebruikerService.KrijgAlleGebruikers();
-        foreach (var gebruiker in gebruikers)
-        {
-            Console.WriteLine(gebruiker.ToString());
-        }
+    }
 
-        var fotoService = new BusinessLayer.FotoService();
-        fotoService.RegistreerFoto(rnd.Next(1000000, 9999999), "C:/Users/daanr/Downloads/aap.png");
-        var fotos = fotoService.KrijgAlleFotos();
-        foreach (var foto in fotos)
-        {
-            Console.WriteLine(foto.ToString());
-        }
+    static void WaarnemingToevoegen(Gebruiker gebruiker)
+    {
+        // Implementeer waarneming toevoegen systeem
+    }
 
-        var locatieService = new BusinessLayer.LocatieService();
-        locatieService.RegistreerLocatie
-        (
-            rnd.Next(1000000, 9999999),
-            "urk",
-            "Gelderland",
-            4.752952,
-            5.864214
-        );
-        var locaties = locatieService.KrijgAlleLocaties();
-        foreach (var locatie in locaties)
-        {
-            Console.WriteLine(locatie.ToString());
-        }
-        var waarnemingService = new BusinessLayer.WaarnemingService();
-        waarnemingService.RegistreerWaarneming
-        (
-            rnd.Next(1000000, 9999999),
-            rnd.Next(1000000, 9999999),
-            rnd.Next(1000000, 9999999),
-            rnd.Next(1000000, 9999999),
-            rnd.Next(1000000, 9999999),
-            "halelujah",
-            "01/01/2012",
-            "12:30"
-        );
-        var waarnemingen = waarnemingService.KrijgAlleWaarnemingen();
-        foreach (var waarneming in waarnemingen)
-        {
-            Console.WriteLine(waarneming.ToString());
-        }
+    static void WaarnemingenBekijken()
+    {
+        bool blijfVragen = true;
 
+        while (blijfVragen)
+        {
+            Console.WriteLine("""
+                              Kies een actie:
+                              (1) Alle waarnemingen bekijken
+                              (2) Stoppen
+                              """);
+            string actie = NonNullInput();
+
+            switch (actie)
+            {
+                // Implementeer waarneming bekijken acties
+                // Schuif "(2) Stoppen" naar een verder getal indien meer acties zijn toegevoegd
+                case "2":
+                    blijfVragen = false;
+                    break;
+            }
+        }
+    }
+
+    // Input-ophalende functie die geen waarschuwing over mogelijke null-waardes geeft
+    static string NonNullInput()
+    {
+        while (true)
+        {
+            string? input = Console.ReadLine();
+
+            if (String.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Input is leeg, probeer alsjeblieft opnieuw.");
+            }
+            else
+            {
+                return input;
+            }
+        }
     }
 }
