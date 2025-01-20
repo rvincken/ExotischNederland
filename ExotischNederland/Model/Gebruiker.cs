@@ -1,9 +1,4 @@
-﻿using System.Net.Http.Headers;
-
-namespace ExotischNederland.Model;
-
-// implementeer:
-// weergavenaam, naam, email, biografie, taal, geslacht, geboortejaar, telefoonnummer, land
+﻿namespace ExotischNederland.Model;
 internal class Gebruiker
 {
     private string _naam;
@@ -16,12 +11,13 @@ internal class Gebruiker
     private int _geboortejaar;
     private long _telefoonnummer;
     private string _land;
+
     public string Naam
     {
         get{return _naam;}
         set
         {
-            if (value.Length > 2)
+            if (value.Length > 2 && value.Length < 40)
             {
                 _naam = value;
             }
@@ -32,9 +28,6 @@ internal class Gebruiker
             }
         }
     }
-
-
-    //keuze geslachten (niet verplicht)
     public char Geslacht
     {
         get{return _geslacht;}
@@ -53,7 +46,6 @@ internal class Gebruiker
             }
         }
     }
-    //keuzen uit talen, kunnen altijd meer worden toegevoegd 
     public string Taal
     {
         get{return _taal;}
@@ -126,8 +118,6 @@ internal class Gebruiker
             }
         }
     }
-    
-
     public int Geboortejaar
     {
         get {return _geboortejaar;}
@@ -178,8 +168,6 @@ internal class Gebruiker
             _id = value;
         }
     }
-    
-    //constructor
     public Gebruiker(string naam, string taal, int geboortejaar, string land, string email, long telefoonnummer, string weergavenaam, char geslacht)
     {
         Naam = naam;
@@ -191,9 +179,6 @@ internal class Gebruiker
         Weergavenaam = weergavenaam;
         Geslacht = geslacht;
     }
-
-    // Voeg mogelijke ToString() override toe
-
     public override string ToString()
     {
         return $"""
