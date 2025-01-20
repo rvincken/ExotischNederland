@@ -1,14 +1,20 @@
 
+using System.Data;
 using Microsoft.Data.Sqlite;
 
 namespace ExotischNederland.DataLayer;
 
 internal class GebruikerRepository
 {
-    private readonly string _connectionString = @"Data Source=C:\Users\rickv\source\repos\ExotischNederland3\ExotischNederland\Database\ExotischNederland.db";
+    private readonly string _connectionString;
 
     public GebruikerRepository()
     {
+        string baseDirectory = AppContext.BaseDirectory;
+        string databasePath = Path.Combine(baseDirectory, "Database", "ExotischNederland.db");
+
+        _connectionString = $"Data Source={databasePath}";
+
         InitializeDatabase();
     }
 

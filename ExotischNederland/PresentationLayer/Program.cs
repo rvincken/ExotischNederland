@@ -23,7 +23,7 @@ internal class Program
         soortService.RegistreerSoort
         (
             rnd.Next(1000000, 9999999),
-            "anus soortius",
+            "anus sooartius",
             "anusdier",
             "plant",
             "boom",
@@ -58,7 +58,7 @@ internal class Program
         }
 
         var fotoService = new BusinessLayer.FotoService();
-        fotoService.RegistreerFoto(rnd.Next(1000000, 9999999), "C:/Users/rickv/Downloads/muis.png");
+        fotoService.RegistreerFoto(rnd.Next(1000000, 9999999), "C:/Users/daanr/Downloads/aap.png");
         var fotos = fotoService.KrijgAlleFotos();
         foreach (var foto in fotos)
         {
