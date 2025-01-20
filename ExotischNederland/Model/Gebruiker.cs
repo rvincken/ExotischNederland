@@ -1,32 +1,54 @@
-﻿namespace ExotischNederland.Model;
+﻿using System.Net.Http.Headers;
+
+namespace ExotischNederland.Model;
 
 // implementeer:
 // weergavenaam, naam, email, biografie, taal, geslacht, geboortejaar, telefoonnummer, land
 internal class Gebruiker
 {
     private string _naam;
-    private string? _geslacht;
+    private char _geslacht;
     private string _taal;
     private string _email;
+    private string _weergavenaam;
+    private int _id;
+    private string _biografie;
+    private int _geboortejaar;
+    private long _telefoonnummer;
+    private string _land;
     public string Naam
     {
         get{return _naam;}
+        set
+        {
+            if (value.Length > 2)
+            {
+                _naam = value;
+            }
+            else
+            {
+                throw new ArgumentException("Gebruiker.Naam moet minstens 2 tekens zijn, " + 
+                "de ingevoerde naam is 2 of minder tekens");
+            }
+        }
     }
 
+
     //keuze geslachten (niet verplicht)
-    public string? Geslacht
+    public char Geslacht
     {
         get{return _geslacht;}
         set
         {
-            if (value.ToLower() == "m" || value.ToLower() == "v")
+            value = char.ToLower(value);
+            if (value == 'm' || value == 'v')
             {
-                _geslacht = value.ToLower();
+                _geslacht = value;
             }
             else
             {
                 throw new ArgumentException(
-                    $"{this}.Geslacht kan alleen 'm'/'v' zijn, " +
+                    $"Gebruiker.Geslacht kan alleen 'm'/'v' zijn, " +
                     $"maar een waarde van {value} is gegeven.");
             }
         }
@@ -37,14 +59,15 @@ internal class Gebruiker
         get{return _taal;}
         set
         {
-            if (value.ToLower() == "nl" || value.ToLower() == "en")
+            value = value.ToLower();
+            if (value == "nl" || value == "en")
             {
-                _taal = value.ToLower();
+                _taal = value;
             }
             else
             {
                 throw new ArgumentException(
-                    $"{this}.Taal kan alleen 'nl'/'en' zijn, " +
+                    $"Gebruiker.Taal kan alleen 'nl'/'en' zijn, " +
                     $"maar een waarde van {value} is gegeven.");
             }
         }
@@ -62,45 +85,131 @@ internal class Gebruiker
             else
             {
                 throw new ArgumentException(
-                    $"{this}.Email kan alleen een geldig adres zijn, " +
+                    $"Gebruiker.Email kan alleen een geldig adres zijn, " +
                     $"maar een waarde van {value} is gegeven.");
             }
 
         }
     }
 
-    public string Weergavenaam {get;set;}
-    public string? Biografie {get;set;}
-    public string Geboortejaar {get;set;}
-    public int Telefoonnummer {get;set;}
-    public string Land {get;set;}
+    public string Weergavenaam 
+    {get{return _weergavenaam;}
+    set
+        {
+            if (value.Length <= 20)
+                {
+                    _weergavenaam = value;
+
+                }
+            else
+            {
+                throw new ArgumentException(
+                $"Gebruiker.Weergavenaam kan maximaal 20 tekens zijn, " +    
+                $"maar de weergavenaam is {value.Length} tekens lang");
+            }
+        }
+    }
+    public string Biografie 
+    {
+        get{return _biografie;}
+        set
+        {
+            if (value.Length <= 200)
+            {
+                _biografie = value;
+            }
+            else
+            {
+                throw new ArgumentException(
+                    $"Gebruiker.Biografie kan maximaal 200 tekens zijn, " +
+                    $"maar de biografie is {value.Length} tekens lang.");
+            }
+        }
+    }
+    
+
+    public int Geboortejaar
+    {
+        get {return _geboortejaar;}
+        set
+        {
+            if (value <= DateTime.Now.Year)
+            {
+                _geboortejaar = value;
+            }
+            else
+            {
+                throw new ArgumentException 
+                (
+                    $"Gebruiker.geboortenjaar is in de toekomst"
+                );
+            }
+
+        }
+    }
+    public long Telefoonnummer 
+    {
+        get{return _telefoonnummer;}
+        set
+        {
+            if (Telefoonnummer < 9999999999 && Telefoonnummer > 1000000000)
+            {
+                _telefoonnummer = value;
+            }
+            else
+            {
+                throw new ArgumentException("Gebruiker.Telefoonnummer is geen geldig telefoonnummer");
+            }
+        }
+    }
+    public string Land 
+    {
+        get{return _land;}
+        set
+        {
+            _land = value;
+        }
+    }
+    public int Id
+    {
+        get{return _id;}
+        set
+        {
+            _id = value;
+        }
+    }
     
     //constructor
-    public Gebruiker(string naam, string taal, string geboortejaar, string land, string email, int telefoonnummer, string weergavenaam)
+    public Gebruiker(string naam, string taal, int geboortejaar, string land, string email, long telefoonnummer, string weergavenaam, char geslacht)
     {
-        _naam = naam;
+        Naam = naam;
         Taal = taal;
         Geboortejaar = geboortejaar;
         Land = land;
         Email = email;
         Telefoonnummer = telefoonnummer;
         Weergavenaam = weergavenaam;
-    }
-
-    public void WijzigNaam(string nieuweNaam)
-    {
-        _naam = nieuweNaam;
-    }
-
-    //niet verplichten velden invullen.
-    public void SetGeslacht(string geslacht)
-    {
         Geslacht = geslacht;
-    }
-    public void SetBiografie(string nieuweBiografie)
-    {
-        Biografie = nieuweBiografie;
     }
 
     // Voeg mogelijke ToString() override toe
+
+    public override string ToString()
+    {
+        return $"""
+        ID: {Id}
+        Naam: {Naam}
+        Geslacht: {Geslacht}
+        Geboortejaar: {Geboortejaar}
+        Taal: {Taal}
+        Email: {Email}
+        Telefoonnummer: {Telefoonnummer}
+        Weergavenaam: {Weergavenaam}
+        Land: {Land}
+        Biografie: {Biografie}
+
+
+        """;
+
+    }
 }
