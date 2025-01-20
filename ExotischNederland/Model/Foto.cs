@@ -60,4 +60,12 @@ internal class Foto
 
         return File.ReadAllBytes(pad);
     }
+
+    public override string ToString()
+    {
+        return $"""
+                ID: {Id}
+                Foto gekoppeld: {(Afbeelding != null ? "Ja" : "Nee")}
+                """;
+    }
 }

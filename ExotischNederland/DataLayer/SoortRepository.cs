@@ -4,7 +4,7 @@ namespace ExotischNederland.DataLayer;
 
 internal class SoortRepository
 {
-    private readonly string _connectionString = @"../Database/ExotischNederland.db";
+    private readonly string _connectionString = @"Data Source=C:\Users\rickv\source\repos\ExotischNederland3\ExotischNederland\Database\ExotischNederland.db";
 
     public SoortRepository()
     {
@@ -22,8 +22,8 @@ internal class SoortRepository
         connection.Open();
 
         string insertQuery = @"
-            INSERT INTO Soort (Sid, WetenschappelijkeNaam, SoortNaam, Type, Categorie, HoeVaakVoorkomt, Oorsprong
-            VALUES (@Sid, @WetenschappelijkeNaam, @SoortNaam, @Type, @Categorie, @HoeVaakVoorkomt, @Oorsprong);";
+        INSERT INTO Soort (Sid, WetenschappelijkeNaam, SoortNaam, Type, Categorie, HoeVaakVoorkomt, Oorsprong)
+        VALUES (@Sid, @WetenschappelijkeNaam, @SoortNaam, @Type, @Categorie, @HoeVaakVoorkomt, @Oorsprong);";
 
         using var command = new SqliteCommand(insertQuery, connection);
         command.Parameters.AddWithValue("@Sid", soort.Id);
@@ -45,7 +45,7 @@ internal class SoortRepository
         connection.Open();
 
         string selectQuery = @"
-            SELECT * FROM Soort;";
+        SELECT * FROM Soort;";
 
         using var command = new SqliteCommand(selectQuery, connection);
 

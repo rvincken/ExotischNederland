@@ -4,7 +4,7 @@ namespace ExotischNederland.DataLayer;
 
 internal class WaarnemingRepository
 {
-    private readonly string _connectionString = @"../Database/ExotischNederland.db";
+    private readonly string _connectionString = @"Data Source=C:\Users\rickv\source\repos\ExotischNederland3\ExotischNederland\Database\ExotischNederland.db";
 
     public WaarnemingRepository()
     {

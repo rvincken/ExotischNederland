@@ -144,7 +144,7 @@ internal class Gebruiker
         get{return _telefoonnummer;}
         set
         {
-            if (Telefoonnummer.ToString().Length == 10)
+            if (value.ToString().Length == 10)
             {
                 _telefoonnummer = value;
             }

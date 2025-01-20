@@ -4,7 +4,7 @@ namespace ExotischNederland.DataLayer;
 
 internal class LocatieRepository
 {
-    private readonly string _connectionString = @"../Database/ExotischNederland.db";
+    private readonly string _connectionString = @"Data Source=C:\Users\rickv\source\repos\ExotischNederland3\ExotischNederland\Database\ExotischNederland.db";
 
     public LocatieRepository()
     {
@@ -22,7 +22,7 @@ internal class LocatieRepository
         connection.Open();
 
         string insertQuery = @"
-            INSERT INTO Locatie (Lid, Locatienaam, Provincie, Breedtegraad, Lengtegraadt)
+            INSERT INTO Locatie (Lid, Locatienaam, Provincie, Breedtegraad, Lengtegraad)
             VALUES (@Lid, @Locatienaam, @Provincie, @Breedtegraad, @Lengtegraad);";
 
         using var command = new SqliteCommand(insertQuery, connection);

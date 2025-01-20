@@ -80,7 +80,7 @@ internal class Soort
         get { return _categorie; }
         set
         {
-            if (value.Length >= 50 && value.Length != 0)
+            if (value.Length <= 50 && value.Length != 0)
             {
                 _categorie = value;
             }
@@ -96,7 +96,7 @@ internal class Soort
         get { return _hoeVaakDeSoortVoorkomt; }
         set
         {
-            if (value < 0 || value > 1000000000)
+            if (value > 0 || value < 1000000000)
             {
                 _hoeVaakDeSoortVoorkomt = value;
             }

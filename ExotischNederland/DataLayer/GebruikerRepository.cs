@@ -5,7 +5,7 @@ namespace ExotischNederland.DataLayer;
 
 internal class GebruikerRepository
 {
-    private readonly string _connectionString = @".../Bestandslocatie/Database.db";
+    private readonly string _connectionString = @"Data Source=C:\Users\rickv\source\repos\ExotischNederland3\ExotischNederland\Database\ExotischNederland.db";
 
     public GebruikerRepository()
     {
@@ -23,14 +23,14 @@ internal class GebruikerRepository
         connection.Open();
 
         string insertQuery = @"
-            INSERT INTO Gebruiker (Gid, Rol, Naam, Geslacht, Geboortejaar, Taal, Email, Telefoonnummer, Weergavenaam, Land, Biografie
-            VALUES (@Gid, @Rol, @Naam, @Geslacht, @Geboortejaar, @Taal, @Land, @Email, @Telefoonnummer, @Weergavenaam, @Biografie))";
-        
+        INSERT INTO Gebruiker (Gid, Rol, Naam, Geslacht, Geboortejaar, Taal, Land, Email, Telefoonnummer, Weergavenaam, Biografie)
+        VALUES (@Gid, @Rol, @Naam, @Geslacht, @Geboortejaar, @Taal, @Land, @Email, @Telefoonnummer, @Weergavenaam, @Biografie);";
+
         using var command = new SqliteCommand(insertQuery, connection);
         command.Parameters.AddWithValue("@Gid", gebruiker.Id);
         command.Parameters.AddWithValue("@Rol", gebruiker.Rol);
         command.Parameters.AddWithValue("@Naam", gebruiker.Naam);
-        command.Parameters.AddWithValue("@Geslacht", gebruiker.Geslacht);
+        command.Parameters.AddWithValue("@Geslacht", gebruiker.Geslacht.ToString());
         command.Parameters.AddWithValue("@Geboortejaar", gebruiker.Geboortejaar);
         command.Parameters.AddWithValue("@Taal", gebruiker.Taal);
         command.Parameters.AddWithValue("@Land", gebruiker.Land);
@@ -38,7 +38,7 @@ internal class GebruikerRepository
         command.Parameters.AddWithValue("@Telefoonnummer", gebruiker.Telefoonnummer);
         command.Parameters.AddWithValue("@Weergavenaam", gebruiker.Weergavenaam);
         command.Parameters.AddWithValue("@Biografie", gebruiker.Biografie);
-        
+
         command.ExecuteNonQuery();
     }
 
@@ -50,8 +50,20 @@ internal class GebruikerRepository
         connection.Open();
 
         string selectQuery = @"
-            SELECT * FROM Gebruiker;";
-        
+        SELECT 
+            Gid,
+            Rol,
+            Naam,
+            Geslacht,
+            Geboortejaar,
+            Taal,
+            Land,
+            Email,
+            Telefoonnummer,
+            Weergavenaam,
+            Biografie
+        FROM Gebruiker;";
+
         using var command = new SqliteCommand(selectQuery, connection);
         using var reader = command.ExecuteReader();
         while (reader.Read())
