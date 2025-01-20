@@ -42,7 +42,7 @@ internal class GebruikerRepository
         command.ExecuteNonQuery();
     }
 
-    public List<Model.Gebruiker> GeefAlleGebruikersWeer()
+    public List<Model.Gebruiker> HaalAlleGebruikersOp()
     {
         var gebruikers = new List<Model.Gebruiker>();
         
