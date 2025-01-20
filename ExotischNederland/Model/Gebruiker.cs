@@ -191,7 +191,12 @@ internal class Gebruiker
                 
         }
     }
-    public Gebruiker(int id, string rol, string naam, string taal, int geboortejaar, string land, string email, long telefoonnummer, string weergavenaam, char geslacht, string biografie)
+    public Gebruiker
+        (
+            int id, string rol, string naam, string taal, 
+            int geboortejaar, string land, string email, long telefoonnummer, 
+            string weergavenaam, char geslacht, string biografie
+        )
     {
         Id = id;
         Rol = rol;
