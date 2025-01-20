@@ -72,7 +72,7 @@ internal class Gebruiker
         get{return _email;}
         set
         {
-            if (value.Contains('@')) // Werk dit nog grondiger uit
+            if (value.Contains('@'))
             {
                 _email = value;
             }
