@@ -142,7 +142,7 @@ internal class Gebruiker
         get{return _telefoonnummer;}
         set
         {
-            if (Telefoonnummer < 9999999999 && Telefoonnummer > 1000000000)
+            if (Telefoonnummer.ToString().Length == 10)
             {
                 _telefoonnummer = value;
             }
@@ -165,7 +165,15 @@ internal class Gebruiker
         get{return _id;}
         set
         {
-            _id = value;
+            if (Id.ToString().Length == 7)
+            {
+                _id = value;
+            }
+            else
+            {
+                throw new ArgumentException("Gebruiker.Id moet 7 nummers zijn, ingevoerde waarden is meer/minder");
+            }
+
         }
     }
     public Gebruiker(string naam, string taal, int geboortejaar, string land, string email, long telefoonnummer, string weergavenaam, char geslacht)
@@ -192,8 +200,6 @@ internal class Gebruiker
         Weergavenaam: {Weergavenaam}
         Land: {Land}
         Biografie: {Biografie}
-
-
         """;
 
     }
