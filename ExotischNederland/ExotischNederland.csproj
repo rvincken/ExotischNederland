@@ -11,4 +11,10 @@
     <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Database\ExotischNederland.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
