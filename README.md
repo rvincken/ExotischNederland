@@ -8,5 +8,5 @@
       voor een applicatie voor het documenteren van waarnemingen van dier- en
       plantsoorten in het wild zoals gevraagd door de opdrachtgever.
 # Instructies
-*Hoe draai ik dit programma?*
+**Hoe draai ik dit programma?**
 In de project directory van het programma staat in de folder Datalayer 5 bestanden. Door de string variabele _connectionString aan te passen naar het pad van het database bestand (bevindt zich in Database/ExotischNederland.db) kan het programma gedraaid worden. Pas dit aan voor elk repository klasse bestand.
