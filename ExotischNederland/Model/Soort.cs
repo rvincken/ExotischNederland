@@ -5,6 +5,8 @@ internal class Soort
     private int _id;
     private string _wetenschappelijkeNaam;
     private string _soortNaam;
+    private string _type;
+    private string _categorie;
     private int _hoeVaakDeSoortVoorkomt;
     private char _oorsprong;
 
@@ -57,6 +59,38 @@ internal class Soort
         }
     }
 
+    public string Type
+    {
+        get { return _type; }
+        set
+        {
+            if (value == "plant" || value == "dier")
+            {
+                _type = value;
+            }
+            else
+            {
+                throw new ArgumentException("Type moet plant of dier zijn");
+            }
+        }
+    }
+
+    public string Categorie
+    {
+        get { return _categorie; }
+        set
+        {
+            if (value.Length >= 50 && value.Length != 0)
+            {
+                _categorie = value;
+            }
+            else
+            {
+                throw new ArgumentException("Categorie mag niet langer zijn dan 50 karakters");
+            }
+        }
+    }
+
     public int HoeVaakDeSoortVoorkomt
     {
         get { return _hoeVaakDeSoortVoorkomt; }
@@ -92,15 +126,27 @@ internal class Soort
         }
     }
 
-    public Soort(int id, string wetenschappelijkeNaam, string soortNaam, int hoeVaakDeSoortVoorkomt, char oorsprong)
+    public Soort(int id, string wetenschappelijkeNaam, string soortNaam, string type, string categorie, int hoeVaakDeSoortVoorkomt, char oorsprong)
     {
         Id = id;
         WetenschappelijkeNaam = wetenschappelijkeNaam;
         SoortNaam = soortNaam;
+        Type = type;
+        Categorie = categorie;
         HoeVaakDeSoortVoorkomt = hoeVaakDeSoortVoorkomt ;
         Oorsprong = oorsprong;
     }
+
+    public override string ToString()
+    {
+        return $"""
+                ID: {Id}
+                Wetenschappelijke naam: {WetenschappelijkeNaam}
+                Soort naam : {SoortNaam}
+                Type: {Type}
+                Categorie: {Categorie}
+                Hoe vaak komt de soort voor: {HoeVaakDeSoortVoorkomt}
+                Oorsprong: {(Oorsprong == 'e' ? "exoot" : "inheems")}
+                """;
+    }
 }
-
-
-
