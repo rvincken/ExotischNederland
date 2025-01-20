@@ -125,6 +125,11 @@ internal class Locatie
             "Zuid-Holland"
         };
 
+        if (provincie.Length > 12)
+        {
+            return false;
+        }
+
         return provincieNamen.Contains(provincie);
     }
 
