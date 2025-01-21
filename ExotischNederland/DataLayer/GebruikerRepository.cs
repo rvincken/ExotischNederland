@@ -30,11 +30,10 @@ internal class GebruikerRepository
         connection.Open();
 
         string insertQuery = @"
-        INSERT INTO Gebruiker (Gid, Rol, Naam, Geslacht, Geboortejaar, Taal, Land, Email, Telefoonnummer, Weergavenaam, Biografie)
-        VALUES (@Gid, @Rol, @Naam, @Geslacht, @Geboortejaar, @Taal, @Land, @Email, @Telefoonnummer, @Weergavenaam, @Biografie);";
+        INSERT INTO Gebruiker (Rol, Naam, Geslacht, Geboortejaar, Taal, Land, Email, Telefoonnummer, Weergavenaam, Biografie)
+        VALUES (@Rol, @Naam, @Geslacht, @Geboortejaar, @Taal, @Land, @Email, @Telefoonnummer, @Weergavenaam, @Biografie);";
 
         using var command = new SqliteCommand(insertQuery, connection);
-        command.Parameters.AddWithValue("@Gid", gebruiker.Id);
         command.Parameters.AddWithValue("@Rol", gebruiker.Rol);
         command.Parameters.AddWithValue("@Naam", gebruiker.Naam);
         command.Parameters.AddWithValue("@Geslacht", gebruiker.Geslacht.ToString());

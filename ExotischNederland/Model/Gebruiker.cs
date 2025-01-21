@@ -13,7 +13,6 @@ internal class Gebruiker
     private string _land;
     private string _rol;
     
-    
     public string Naam
     {
         get{return _naam;}

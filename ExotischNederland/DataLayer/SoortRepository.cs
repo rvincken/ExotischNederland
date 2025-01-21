@@ -27,11 +27,10 @@ internal class SoortRepository
         connection.Open();
 
         string insertQuery = @"
-        INSERT INTO Soort (Sid, WetenschappelijkeNaam, SoortNaam, Type, Categorie, HoeVaakVoorkomt, Oorsprong)
-        VALUES (@Sid, @WetenschappelijkeNaam, @SoortNaam, @Type, @Categorie, @HoeVaakVoorkomt, @Oorsprong);";
+        INSERT INTO Soort (WetenschappelijkeNaam, SoortNaam, Type, Categorie, HoeVaakVoorkomt, Oorsprong)
+        VALUES (@WetenschappelijkeNaam, @SoortNaam, @Type, @Categorie, @HoeVaakVoorkomt, @Oorsprong);";
 
         using var command = new SqliteCommand(insertQuery, connection);
-        command.Parameters.AddWithValue("@Sid", soort.Id);
         command.Parameters.AddWithValue("@WetenschappelijkeNaam", soort.WetenschappelijkeNaam);
         command.Parameters.AddWithValue("@SoortNaam", soort.SoortNaam);
         command.Parameters.AddWithValue("@Type", soort.Type);

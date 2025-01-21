@@ -27,11 +27,10 @@ internal class LocatieRepository
         connection.Open();
 
         string insertQuery = @"
-            INSERT INTO Locatie (Lid, Locatienaam, Provincie, Breedtegraad, Lengtegraad)
-            VALUES (@Lid, @Locatienaam, @Provincie, @Breedtegraad, @Lengtegraad);";
+            INSERT INTO Locatie (Locatienaam, Provincie, Breedtegraad, Lengtegraad)
+            VALUES (@Locatienaam, @Provincie, @Breedtegraad, @Lengtegraad);";
 
         using var command = new SqliteCommand(insertQuery, connection);
-        command.Parameters.AddWithValue("@Lid", locatie.Id);
         command.Parameters.AddWithValue("@Locatienaam", locatie.Locatienaam);
         command.Parameters.AddWithValue("@Provincie", locatie.Provincie);
         command.Parameters.AddWithValue("@Breedtegraad", locatie.Breedtegraad);

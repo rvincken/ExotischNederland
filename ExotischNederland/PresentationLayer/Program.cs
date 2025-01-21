@@ -130,6 +130,8 @@ internal class Program
         }
     }
 
+    
+
     // Input-ophalende functie die geen waarschuwing over mogelijke null-waardes geeft
     static string NonNullInput()
     {

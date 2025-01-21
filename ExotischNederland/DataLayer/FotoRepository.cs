@@ -28,11 +28,10 @@ internal class FotoRepository
         connection.Open();
 
         string insertQuery = @"
-            INSERT INTO Foto (Fid, Afbeelding)
-            VALUES (@Fid, @Afbeelding);";
+            INSERT INTO Foto (Afbeelding)
+            VALUES (@Afbeelding);";
 
         using var command = new SqliteCommand(insertQuery, connection);
-        command.Parameters.AddWithValue("@Fid", foto.Id);
         command.Parameters.AddWithValue("@Afbeelding", foto.Afbeelding);
 
         command.ExecuteNonQuery();

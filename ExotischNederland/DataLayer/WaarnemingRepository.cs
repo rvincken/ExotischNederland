@@ -32,11 +32,10 @@ internal class WaarnemingRepository
         connection.Open();
 
         string insertQuery = @"
-            INSERT INTO Waarneming (Wid, Gid, Fid, Lid, Sid, Omschrijving, Datum, Tijd)
-            VALUES (@Wid, @Gid, @Fid, @Lid, @Sid, @Omschrijving, @Datum, @Tijd);";
+            INSERT INTO Waarneming (Gid, Fid, Lid, Sid, Omschrijving, Datum, Tijd)
+            VALUES (@Gid, @Fid, @Lid, @Sid, @Omschrijving, @Datum, @Tijd);";
 
         using var command = new SqliteCommand(insertQuery, connection);
-        command.Parameters.AddWithValue("@Wid", waarneming.Id);
         command.Parameters.AddWithValue("@Gid", waarneming.Waarnemer.Id);
         command.Parameters.AddWithValue("@Fid", waarneming.Foto.Id);
         command.Parameters.AddWithValue("@Lid", waarneming.Locatie.Id);
