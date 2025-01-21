@@ -380,7 +380,7 @@ internal class Program
             {
                 return int.Parse(NonNullInput());
             }
-            catch (FormatException)
+            catch (Exception)
             {
                 {
                     Console.WriteLine("Ongeldig getal gegeven.");
