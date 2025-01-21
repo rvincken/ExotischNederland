@@ -10,6 +10,8 @@
              plantsoorten in het wild zoals gevraagd door de opdrachtgever.
 */
 
+using System.Globalization;
+
 using ExotischNederland.BusinessLayer;
 using ExotischNederland.Model;
 
@@ -185,7 +187,7 @@ internal class Program
                 Console.WriteLine($"Fout: {ex.Message}");
                 Console.WriteLine("Probeer opnieuw.\n");
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
                 Console.WriteLine("Fout: ongeldige invoer. Probeer opnieuw.");
             }
@@ -197,6 +199,20 @@ internal class Program
         Soort soort = VraagSoort();
         Locatie locatie = VraagLocatie();
         Foto foto = VraagFoto();
+
+        Console.WriteLine("Geef een omschrijving van de waarneming.");
+        string omschrijving = NonNullInput();
+
+        DateTime dt = DateTime.Now;
+
+        string datum = dt.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+        string tijd = dt.ToString("HH:mm", CultureInfo.InvariantCulture);
+
+        Console.WriteLine($"Datum: {datum} Tijd: {tijd} (Opgehaald uit systeemklok)");
+
+        waarnemingService.RegistreerWaarneming(1000001, gebruiker, foto, locatie, soort, omschrijving, datum, tijd);
+
+        Console.WriteLine("Waarmeming is geregistreerd.");
     }
 
     static Soort VraagSoort()
@@ -212,7 +228,7 @@ internal class Program
 
             return soort;
         }
-        catch(Exception ex)
+        catch(Exception)
         {
             Console.WriteLine("Soort bestaat nog niet in database. Extra informatie wordt gevraagd.");
 
@@ -225,7 +241,7 @@ internal class Program
             Console.WriteLine("Is de waargenomen soort een plant of dier?");
             string type = KrijgKeuze(["plant", "dier"]);
 
-            Console.WriteLine("Is de waargenomen soort inheems of exoot in Nederland?");
+            Console.WriteLine("Is de waargenomen soort inheems (i) of exoot (e) in Nederland?");
             char oorsprong = char.Parse(KrijgKeuze(["e", "i"]));
 
             soortService.RegistreerSoort(1000001, wetenschapNaam, soortNaam, type, categorie, oorsprong);
@@ -249,7 +265,7 @@ internal class Program
 
             return locatie;
         }
-        catch(Exception ex)
+        catch(Exception)
         {
             Console.WriteLine("Locatie bestaat nog niet in database. Extra informatie wordt gevraagd.");
 
@@ -277,7 +293,30 @@ internal class Program
 
     static Foto VraagFoto()
     {
-        Console.WriteLine("Geef het bestandspad naar een .png afbeeldingsbestand van de waarneming.");
+        while (true)
+        {
+            Console.WriteLine("Geef het bestandspad naar een .png afbeeldingsbestand van de waarneming.");
+            byte[] afbeelding = VraagLocalImage();
+
+            try
+            {
+                var foto = fotoService.KrijgFotoVanByteArray(afbeelding);
+
+                Console.WriteLine("Afbeelding bestaat al in database. Geef alsjeblieft een originele afbeelding.");
+
+                continue;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Deze Foto is origineel en bestaat nog niet in het database.");
+
+                fotoService.RegistreerFoto(1000001, afbeelding);
+
+                Console.WriteLine("Foto is toegevoegd aan database.");
+
+                return fotoService.KrijgFotoVanByteArray(afbeelding);
+            }
+        }
     }
 
     static void WaarnemingenBekijken()
@@ -361,11 +400,43 @@ internal class Program
             }
         }
     }
+
     static bool IsValidCoordinate(double coordinate)
     {
         double afgerond = Math.Round(coordinate, 6);
 
         return Math.Abs(coordinate - afgerond) < 1e-7;
+    }
+
+    static byte[] VraagLocalImage()
+    {
+        while (true)
+        {
+            try
+            {
+                string path = NonNullInput();
+                return LaadAfbeeldingVanPad(path);
+            }
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+    }
+
+    static byte[] LaadAfbeeldingVanPad(string pad)
+    {
+        if (!File.Exists(pad))
+        {
+            throw new FileNotFoundException($"Het bestand '{pad}' bestaat niet.");
+        }
+
+        if (Path.GetExtension(pad).ToLower() != ".png")
+        {
+            throw new ArgumentException("Alleen PNG bestanden zijn toegestaan.");
+        }
+
+        return File.ReadAllBytes(pad);
     }
 
     // Input-ophalende functie die geen waarschuwing over mogelijke null-waardes geeft

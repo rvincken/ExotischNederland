@@ -120,7 +120,7 @@ internal class SoortRepository
             WHERE WetenschappelijkeNaam = @WetenschappelijkeNaam;";
 
         using var command = new SqliteCommand(selectQuery, connection);
-        command.Parameters.AddWithValue("@WetenschappelijkeNaam;", wetenschapNaam);
+        command.Parameters.AddWithValue("@WetenschappelijkeNaam", wetenschapNaam);
 
         using var reader = command.ExecuteReader();
         if (reader.Read())

@@ -72,7 +72,7 @@ internal class Waarneming
         private set
         {
             string timeFormat = "HH:mm";
-            if ( IsValidDateOrTime(value, timeFormat))
+            if (IsValidDateOrTime(value, timeFormat))
             {
                 _tijd = value;
             }

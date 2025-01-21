@@ -68,7 +68,7 @@ internal class FotoRepository
         connection.Open();
 
         string selectQuery = @"
-            SELECT * FROM FOto
+            SELECT * FROM Foto
             WHERE Fid = @Fid;";
 
         using var command = new SqliteCommand(selectQuery, connection);
@@ -88,6 +88,35 @@ internal class FotoRepository
         throw new ArgumentException
         (
             $"FotoRepository.HaalFotoVanIdOp - Kon geen Foto vinden voor ID: {id}"
+        );
+    }
+
+    public Model.Foto HaalFotoVanByteArrayOp(byte[] afbeelding)
+    {
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
+
+        string selectQuery = @"
+            SELECT * FROM Foto
+            WHERE Afbeelding = @Afbeelding;";
+
+        using var command = new SqliteCommand(selectQuery, connection);
+        command.Parameters.AddWithValue("@Afbeelding", afbeelding);
+
+        using var reader = command.ExecuteReader();
+        if (reader.Read())
+        {
+            int fid = reader.GetInt32(0);
+            byte[] imageBytes = (byte[])reader["Afbeelding"];
+
+            var foto = new Model.Foto(fid, imageBytes);
+
+            return foto;
+        }
+
+        throw new ArgumentException
+        (
+            $"FotoRepository.HaalFotoVanByteArrayOp - Kon geen Foto vinden voor gegeven image Bytes."
         );
     }
 }

@@ -117,18 +117,13 @@ internal class Locatie
             "gelderland",
             "groningen",
             "limburg",
-            "noord-Brabant",
-            "noord-Holland",
+            "noord-brabant",
+            "noord-holland",
             "overijssel",
             "utrecht",
             "zeeland",
-            "zuid-Holland"
+            "zuid-holland"
         };
-
-        if (provincie.Length > 12)
-        {
-            return false;
-        }
 
         return provincieNamen.Contains(provincie);
     }
