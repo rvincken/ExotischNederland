@@ -177,7 +177,19 @@ internal class Program
                     throw new ArgumentException("Er bestaat al een gebruiker met dit email adres.");
                 }
 
-                gebruikerService.RegistreerGebruiker(1000000, rol, naam, taal, int.Parse(geboortejaar), land, email, telefoonnummer, weergavenaam, geslacht, biografie);
+                gebruikerService.RegistreerGebruiker(
+                    1000000,
+                    rol,
+                    naam,
+                    taal,
+                    int.Parse(geboortejaar),
+                    land,
+                    email,
+                    telefoonnummer,
+                    weergavenaam,
+                    geslacht,
+                    biografie
+                );
 
                 Console.WriteLine("\nRegistratie succesvol!");
                 return;
