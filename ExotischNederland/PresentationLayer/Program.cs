@@ -169,7 +169,7 @@ internal class Program
 
                 var nieuweGebruiker = new Gebruiker
                     (
-                        0, rol, naam, taal, int.Parse(geboortejaar), land, email,
+                        0000000, rol, naam, taal, int.Parse(geboortejaar), land, email,
                         telefoonnummer, weergavenaam, geslacht, biografie
                     );
 
@@ -179,7 +179,7 @@ internal class Program
                     throw new ArgumentException("Er bestaat al een gebruiker met dit email adres.");
                 }
 
-                gebruikerService.RegistreerGebruiker(0, rol, naam, taal, int.Parse(geboortejaar), land, email, telefoonnummer, weergavenaam, geslacht, biografie);
+                gebruikerService.RegistreerGebruiker(0000000, rol, naam, taal, int.Parse(geboortejaar), land, email, telefoonnummer, weergavenaam, geslacht, biografie);
 
                 Console.WriteLine("\nRegistratie succesvol!");
                 return;
