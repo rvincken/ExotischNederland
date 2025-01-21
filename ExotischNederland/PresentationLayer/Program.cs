@@ -84,21 +84,116 @@ internal class Program
         // Deze return is tijdelijk totdat login is afgemaakt.
         // Na implementatie van Login(), verwijder deze.
         // Verwijder ook Random rnd, tenzij je deze wilt gebruiken.
-        Random rnd = new Random();
-        return new Gebruiker
-        (
-            rnd.Next(1000000, 9999999),
-            "medewerker",
-            "sjaak sjaak",
-            "nl",
-            2000,
-            "nederland",
-            "email@email.com",
-            1234567890,
-            "sjaakdegoat",
-            'm',
-            "ik was geboren vanaf een heel jonge leeftijd"
-        );
+        while (true)
+        {
+            Console.WriteLine("""
+                Kies een actie:
+                (1) Inloggen
+                (2) Registreren
+                """);
+
+            String keuze = NonNullInput();
+
+            switch (keuze)
+            {
+                case "1":
+                    Console.WriteLine("\nLOGIN");
+                    Console.WriteLine("-----");
+                    try
+                    {
+                        var gebruikers = gebruikerService.KrijgAlleGebruikers();
+
+                        Console.WriteLine("Email: ");
+                        String email = NonNullInput();
+
+                        var gebruiker = gebruikers.FirstOrDefault(g => g.Email == email);
+                        if (gebruiker == null)
+                        {
+                            Console.WriteLine("Gebruiker niet gevonden.");
+                            break;
+                        }
+
+                        Console.WriteLine($"Welkom terug, {gebruiker.Weergavenaam}!");
+                        return gebruiker;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Fout bij inloggen: {ex.Message}");
+                    }
+                    break;
+
+                case "2":
+                    try
+                    {
+                        RegistreerNieuweGebruiker();
+                        Console.WriteLine("Registratie succesvol! Log nu in om verder te gaan.");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Registratie mislukt: {ex.Message}");
+                    }
+                    break;
+            }
+        }
+    }
+
+    static void RegistreerNieuweGebruiker()
+    {
+        Console.WriteLine("\nREGISTRATIE");
+        Console.WriteLine("-----------");
+
+        while (true)
+        {
+            try
+            {
+                Console.WriteLine("Wat is je rol?: (vrijwilliger/medewerker)");
+                String rol = NonNullInput();
+                Console.WriteLine("Geef je volledige naam: (2 tot 40 tekens.)");
+                String naam = NonNullInput();
+                Console.WriteLine("Geef je email adres: ");
+                String email = NonNullInput();
+                Console.WriteLine("Geef je geslacht: (m/v)");
+                char geslacht = NonNullInput()[0];
+                Console.WriteLine("Geef je geboortejaar:");
+                String geboortejaar = NonNullInput();
+                Console.WriteLine("Geef je taal: (nl/en)");
+                String taal = NonNullInput();
+                Console.WriteLine("Geef je telefoonnummer (bijv. 0612345678):");
+                string telefoonnummer = NonNullInput();
+                Console.WriteLine("Geef je weergavenaam: (Maximaal 20 tekens)");
+                String weergavenaam = NonNullInput();
+                Console.WriteLine("Geef je land: ");
+                String land = NonNullInput();
+                Console.WriteLine("Schrijf een bio: (Maximaal 200 tekens)");
+                String biografie = NonNullInput();
+
+                var nieuweGebruiker = new Gebruiker
+                    (
+                        rol, naam, taal, int.Parse(geboortejaar), land, email,
+                        telefoonnummer, weergavenaam, geslacht, biografie
+                    );
+
+                var bestaandeGebruikers = gebruikerService.KrijgAlleGebruikers();
+                if (bestaandeGebruikers.Any(g => g.Email == email))
+                {
+                    throw new ArgumentException("Er bestaat al een gebruiker met dit email adres.");
+                }
+
+                gebruikerService.RegistreerGebruiker(rol, naam, taal, int.Parse(geboortejaar), land, email, telefoonnummer, weergavenaam, geslacht, biografie);
+
+                Console.WriteLine("\nRegistratie succesvol!");
+                return;
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Fout: {ex.Message}");
+                Console.WriteLine("Probeer opnieuw.\n");
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine("Fout: ongeldige invoer. Probeer opnieuw.");
+            }
+        }
     }
 
     static void WaarnemingToevoegen(Gebruiker gebruiker)
@@ -129,8 +224,6 @@ internal class Program
             }
         }
     }
-
-    
 
     // Input-ophalende functie die geen waarschuwing over mogelijke null-waardes geeft
     static string NonNullInput()
