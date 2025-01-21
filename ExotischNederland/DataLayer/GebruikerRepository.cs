@@ -82,7 +82,7 @@ internal class GebruikerRepository
             string taal = reader.GetString(5);
             string land = reader.GetString(6);
             string email = reader.GetString(7);
-            long telefoonnummer = reader.GetInt64(8);
+            string telefoonnummer = reader.GetString(8);
             string weergavenaam = reader.GetString(9);
             string biografie = reader.GetString(10);
             
