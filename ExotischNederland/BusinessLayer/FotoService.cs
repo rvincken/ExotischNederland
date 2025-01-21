@@ -20,4 +20,9 @@ internal class FotoService
     {
         return _repository.HaalAlleFotosOp();
     }
+
+    public Model.Foto KrijgFotoVanId(int id)
+    {
+        return _repository.HaalFotoVanIdOp(id);
+    }
 }

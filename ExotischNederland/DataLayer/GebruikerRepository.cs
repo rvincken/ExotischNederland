@@ -1,5 +1,6 @@
 
 using System.Data;
+using ExotischNederland.Model;
 using Microsoft.Data.Sqlite;
 
 namespace ExotischNederland.DataLayer;
@@ -82,7 +83,7 @@ internal class GebruikerRepository
             string taal = reader.GetString(5);
             string land = reader.GetString(6);
             string email = reader.GetString(7);
-            long telefoonnummer = reader.GetInt64(8);
+            string telefoonnummer = reader.GetString(8);
             string weergavenaam = reader.GetString(9);
             string biografie = reader.GetString(10);
             
@@ -90,5 +91,43 @@ internal class GebruikerRepository
         }
 
         return gebruikers;
+    }
+
+    public Model.Gebruiker HaalGebruikerVanIdOp(int id)
+    {
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
+
+        string selectQuery = @"
+            SELECT * FROM Gebruiker
+            WHERE Gid = @Gid;";
+
+        using var command = new SqliteCommand(selectQuery, connection);
+        command.Parameters.AddWithValue("@Gid", id);
+
+        using var reader = command.ExecuteReader();
+        if (reader.Read())
+        {
+            int gid = reader.GetInt32(0);
+            string rol = reader.GetString(1);
+            string naam = reader.GetString(2);
+            char geslacht = reader.GetChar(3);
+            int geboortejaar = reader.GetInt32(4);
+            string taal = reader.GetString(5);
+            string land = reader.GetString(6);
+            string email = reader.GetString(7);
+            string telefoonnummer = reader.GetString(8);
+            string weergavenaam = reader.GetString(9);
+            string biografie = reader.GetString(10);
+
+            var gebruiker = new Model.Gebruiker(gid, rol, naam, taal, geboortejaar, land, email, telefoonnummer, weergavenaam, geslacht, biografie);
+
+            return gebruiker;
+        }
+
+        throw new ArgumentException
+        (
+            $"GebruikerRepository.HaalGebruikerVanIdOp - Kon geen Gebruiker vinden voor ID: {id}"
+        );
     }
 }

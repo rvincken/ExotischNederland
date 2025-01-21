@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using ExotischNederland.Model;
+using Microsoft.Data.Sqlite;
 
 namespace ExotischNederland.DataLayer;
 
@@ -60,5 +61,34 @@ internal class FotoRepository
         }
 
         return fotos;
+    }
+
+    public Model.Foto HaalFotoVanIdOp(int id)
+    {
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
+
+        string selectQuery = @"
+            SELECT * FROM FOto
+            WHERE Fid = @Fid;";
+
+        using var command = new SqliteCommand(selectQuery, connection);
+        command.Parameters.AddWithValue("@Fid", id);
+
+        using var reader = command.ExecuteReader();
+        if (reader.Read())
+        {
+            int fid = reader.GetInt32(0);
+            byte[] imageBytes = (byte[])reader["Afbeelding"];
+
+            var foto = new Model.Foto(fid, imageBytes);
+
+            return foto;
+        }
+
+        throw new ArgumentException
+        (
+            $"FotoRepository.HaalFotoVanIdOp - Kon geen Foto vinden voor ID: {id}"
+        );
     }
 }

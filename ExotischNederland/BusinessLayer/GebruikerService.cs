@@ -13,7 +13,7 @@ internal class GebruikerService
     }
 
     public void RegistreerGebruiker
-    (int id, string rol, string naam, string taal, int geboortejaar, string land, string email, long telefoonnummer,
+    (int id, string rol, string naam, string taal, int geboortejaar, string land, string email, string telefoonnummer,
         string weergavenaam, char geslacht, string biografie)
     {
         var gebruiker = new Model.Gebruiker
@@ -29,5 +29,10 @@ internal class GebruikerService
     public List<Model.Gebruiker> KrijgAlleGebruikers()
     {
         return _repository.HaalAlleGebruikersOp();
+    }
+
+    public Model.Gebruiker KrijgGebruikerVanId(int id)
+    {
+        return _repository.HaalGebruikerVanIdOp(id);
     }
 }

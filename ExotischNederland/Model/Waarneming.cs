@@ -5,10 +5,10 @@ namespace ExotischNederland.Model;
 internal class Waarneming
 {
     private int _id;
-    private int _waarnemerId;
-    private int _fotoId;
-    private int _locatieId;
-    private int _soortId;
+    private Gebruiker _waarnemer;
+    private Foto _foto;
+    private Locatie _locatie;
+    private Soort _soort;
     private string _omschrijving;
     private string _datum;
     private string _tijd;
@@ -84,87 +84,39 @@ internal class Waarneming
             }
         }
     }
-    public int WaarnemerId
+    public Gebruiker Waarnemer
     {
-        get { return _waarnemerId; }
-        private set
-        {
-            if (value.ToString().Length == 7)
-            {
-                _waarnemerId = value;
-            }
-            else
-            {
-                throw new ArgumentException(
-                    $"Waarneming.WaarnemerId moet 7 getallen lang zijn, " +
-                    $"Maar een getal van {value} is gegeven.");
-            }
-        }
+        get { return _waarnemer; }
+        private set { _waarnemer = value; }
     }
-    public int FotoId
+    public Foto Foto
     {
-        get { return _fotoId; }
-        private set
-        {
-            if (value.ToString().Length == 7)
-            {
-                _fotoId = value;
-            }
-            else
-            {
-                throw new ArgumentException(
-                    $"Waarneming.FotoId moet 7 getallen lang zijn, " +
-                    $"Maar een getal van {value} is gegeven.");
-            }
-        }
+        get { return _foto; }
+        private set { _foto = value; }
     }
-    public int LocatieId
+    public Locatie Locatie
     {
-        get { return _locatieId; }
-        private set
-        {
-            if (value.ToString().Length == 7)
-            {
-                _locatieId = value;
-            }
-            else
-            {
-                throw new ArgumentException(
-                    $"Waarneming.LocatieId moet 7 getallen lang zijn, " +
-                    $"Maar een getal van {value} is gegeven.");
-            }
-        }
+        get { return _locatie; }
+        private set { _locatie = value; }
     }
-    public int SoortId
+    public Soort Soort
     {
-        get { return _soortId; }
-        private set
-        {
-            if (value.ToString().Length == 7)
-            {
-                _soortId = value;
-            }
-            else
-            {
-                throw new ArgumentException(
-                    $"Waarneming.SoortId moet 7 getallen lang zijn, " +
-                    $"Maar een getal van {value} is gegeven.");
-            }
-        }
+        get { return _soort; }
+        private set { _soort = value; }
     }
 
     public Waarneming
-        (int id, int fotoId, int waarnemerId, int locatieId, int soortId,
+        (int id, Foto foto, Gebruiker waarnemer, Locatie locatie, Soort soort,
         string omschrijving, string datum, string tijd)
     {
         Id = id;
         Omschrijving = omschrijving;
         Datum = datum;
         Tijd = tijd;
-        WaarnemerId = waarnemerId;
-        FotoId = fotoId;
-        LocatieId = locatieId;
-        SoortId = soortId;
+        Waarnemer = waarnemer;
+        Foto = foto;
+        Locatie = locatie;
+        Soort = soort;
     }
 
     private bool IsValidDateOrTime(string value, string format)
@@ -184,10 +136,10 @@ internal class Waarneming
                 Omschrijving: {Omschrijving}
                 Datum: {Datum}
                 Tijd: {Tijd}
-                Waarnemer ID: {WaarnemerId}
-                Foto ID: {FotoId}
-                Locatie ID: {LocatieId}
-                Soort ID: {SoortId}
+                Waarnemer ID: {Waarnemer.Id}
+                Foto ID: {Foto.Id}
+                Locatie ID: {Locatie.Id}
+                Soort ID: {Soort.Id}
                 """;
     }
 }

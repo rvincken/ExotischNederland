@@ -81,4 +81,37 @@ internal class SoortRepository
 
         return soorten;
     }
+
+    public Model.Soort HaalSoortVanIdOp(int id)
+    {
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
+
+        string selectQuery = @"
+            SELECT * FROM Soort
+            WHERE Sid = @Sid;";
+
+        using var command = new SqliteCommand(selectQuery, connection);
+        command.Parameters.AddWithValue("@Sid", id);
+
+        using var reader = command.ExecuteReader();
+        if (reader.Read())
+        {
+            return new Model.Soort
+            (
+                reader.GetInt32(0),
+                reader.GetString(1),
+                reader.GetString(2),
+                reader.GetString(3),
+                reader.GetString(4),
+                reader.GetInt32(5),
+                reader.GetChar(6)
+            );
+        }
+
+        throw new ArgumentException
+        (
+            $"SoortRepository.HaalSoortVanIdOp - Kon geen Soort vinden voor ID: {id}"
+        );
+    }
 }

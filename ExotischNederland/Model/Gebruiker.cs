@@ -9,7 +9,7 @@ internal class Gebruiker
     private int _id;
     private string _biografie;
     private int _geboortejaar;
-    private long _telefoonnummer;
+    private string _telefoonnummer;
     private string _land;
     private string _rol;
     
@@ -139,7 +139,7 @@ internal class Gebruiker
 
         }
     }
-    public long Telefoonnummer 
+    public string Telefoonnummer 
     {
         get{return _telefoonnummer;}
         set
@@ -194,7 +194,7 @@ internal class Gebruiker
     public Gebruiker
         (
             int id, string rol, string naam, string taal, 
-            int geboortejaar, string land, string email, long telefoonnummer, 
+            int geboortejaar, string land, string email, string telefoonnummer, 
             string weergavenaam, char geslacht, string biografie
         )
     {

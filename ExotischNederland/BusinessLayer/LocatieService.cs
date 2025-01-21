@@ -24,4 +24,9 @@ internal class LocatieService
     {
         return _repository.HaalAlleLocatiesOp();
     }
+
+    public Model.Locatie KrijgLocatieVanId(int id)
+    {
+        return _repository.HaalLocatieVanIdOp(id);
+    }
 }
