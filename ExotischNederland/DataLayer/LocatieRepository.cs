@@ -96,4 +96,35 @@ internal class LocatieRepository
             $"LocatieRepository.HaalLocatieVanIdOp - Kon geen Locatie vinden voor ID: {id}"
         );
     }
+
+    public Model.Locatie HaalLocatieVanLocatieNaamOp(string locatieNaam)
+    {
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
+
+        string selectQuery = @"
+            SELECT * FROM Locatie
+            WHERE Locatienaam = @Locatienaam;";
+
+        using var command = new SqliteCommand(selectQuery, connection);
+        command.Parameters.AddWithValue("@Locatienaam", locatieNaam);
+
+        using var reader = command.ExecuteReader();
+        if (reader.Read())
+        {
+            return new Model.Locatie
+            (
+                reader.GetInt32(0),
+                reader.GetString(1),
+                reader.GetString(2),
+                reader.GetDouble(3),
+                reader.GetDouble(4)
+            );
+        }
+
+        throw new ArgumentException
+        (
+            $"LocatieRepository.HaalLocatieVanLocatieNaamOp - Kon geen Locatie vinden voor locatieNaam: {locatieNaam}"
+        );
+    }
 }

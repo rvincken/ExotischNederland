@@ -111,18 +111,18 @@ internal class Locatie
     {
         List<String> provincieNamen = new List<String>
         {
-            "Drenthe",
-            "Flevoland",
-            "Friesland",
-            "Gelderland",
-            "Groningen",
-            "Limburg",
-            "Noord-Brabant",
-            "Noord-Holland",
-            "Overijssel",
-            "Utrecht",
-            "Zeeland",
-            "Zuid-Holland"
+            "drenthe",
+            "flevoland",
+            "friesland",
+            "gelderland",
+            "groningen",
+            "limburg",
+            "noord-Brabant",
+            "noord-Holland",
+            "overijssel",
+            "utrecht",
+            "zeeland",
+            "zuid-Holland"
         };
 
         if (provincie.Length > 12)

@@ -194,7 +194,90 @@ internal class Program
 
     static void WaarnemingToevoegen(Gebruiker gebruiker)
     {
-        // Implementeer waarneming toevoegen systeem
+        Soort soort = VraagSoort();
+        Locatie locatie = VraagLocatie();
+        Foto foto = VraagFoto();
+    }
+
+    static Soort VraagSoort()
+    {
+        Console.WriteLine("Wat is de wetenschappelijke naam van de waargenomen soort?");
+        string wetenschapNaam = NonNullInput();
+
+        try
+        {
+            Soort soort = soortService.KrijgSoortVanWetenschapNaam(wetenschapNaam);
+
+            Console.WriteLine("Wetenschappelijke naam staat al geregistreerd en wordt gekoppeld aan waarneming.");
+
+            return soort;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine("Soort bestaat nog niet in database. Extra informatie wordt gevraagd.");
+
+            Console.WriteLine("Wat is de naam van de waargenomen soort?");
+            string soortNaam = NonNullInput();
+
+            Console.WriteLine("Tot welke categorie hoort de waargenomen soort? (bv. boom, knaagachtige)");
+            string categorie = NonNullInput();
+
+            Console.WriteLine("Is de waargenomen soort een plant of dier?");
+            string type = KrijgKeuze(["plant", "dier"]);
+
+            Console.WriteLine("Is de waargenomen soort inheems of exoot in Nederland?");
+            char oorsprong = char.Parse(KrijgKeuze(["e", "i"]));
+
+            soortService.RegistreerSoort(1000001, wetenschapNaam, soortNaam, type, categorie, oorsprong);
+
+            Console.WriteLine("Nieuwe soort is toegevoegd aan database.");
+
+            return soortService.KrijgSoortVanWetenschapNaam(wetenschapNaam);
+        }
+    }
+
+    static Locatie VraagLocatie()
+    {
+        Console.WriteLine("Rond welke plaatsnaam heeft de waarneming plaatsgevonden? (Bv. Amsterdam, Maastricht)");
+        string locatienaam = NonNullInput();
+
+        try
+        {
+            Locatie locatie = locatieService.KrijgLocatieVanLocatieNaam(locatienaam);
+
+            Console.WriteLine("Locatie is al geregistreerd in database en wordt gekoppeld aan waarneming.");
+
+            return locatie;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine("Locatie bestaat nog niet in database. Extra informatie wordt gevraagd.");
+
+            Console.WriteLine("In welke provincie vond de waarneming plaats?");
+            string provincie = KrijgKeuze
+            ([
+                "drenthe", "flevoland", "friesland", "gelderland",
+                "groningen", "limburg", "noord-brabant", "noord-holland",
+                "overijssel", "utrecht", "zeeland", "zuid-holland"
+            ]);
+
+            Console.WriteLine("Geef de breedtegraad van de waarneming afgekort op 6 decimalen. (coordinaat)");
+            double breedtegraad = GetValidCoordinate();
+
+            Console.WriteLine("Geef de lengtegraad van de waarneming afgekort op 6 decimalen. (coordinaat)");
+            double lengtegraad = GetValidCoordinate();
+
+            locatieService.RegistreerLocatie(1000001, locatienaam, provincie, breedtegraad, lengtegraad);
+
+            Console.WriteLine("Nieuwe locatie is geregistreerd in database.");
+
+            return locatieService.KrijgLocatieVanLocatieNaam(locatienaam);
+        }
+    }
+
+    static Foto VraagFoto()
+    {
+        Console.WriteLine("Geef het bestandspad naar een .png afbeeldingsbestand van de waarneming.");
     }
 
     static void WaarnemingenBekijken()
@@ -221,12 +304,76 @@ internal class Program
         }
     }
 
+    static string KrijgKeuze(string[] keuzes)
+    {
+        while (true)
+        {
+            string input = NonNullInput();
+
+            if (keuzes.Contains(input))
+            {
+                return input;
+            }
+            else
+            {
+                Console.WriteLine("Ongeldige keuze.");
+            }
+        }
+    }
+
+    static int GetValidInt()
+    {
+        while (true)
+        {
+            try
+            {
+                return int.Parse(NonNullInput());
+            }
+            catch (FormatException)
+            {
+                {
+                    Console.WriteLine("Ongeldig getal gegeven.");
+                }
+            }
+        }
+    }
+
+    static double GetValidCoordinate()
+    {
+        while (true)
+        {
+            try
+            {
+                double input = double.Parse(NonNullInput());
+
+                if (IsValidCoordinate(input))
+                {
+                    return input;
+                }
+                else
+                {
+                    Console.WriteLine("Ongeldige invoer.");
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Ongeldig getal");
+            }
+        }
+    }
+    static bool IsValidCoordinate(double coordinate)
+    {
+        double afgerond = Math.Round(coordinate, 6);
+
+        return Math.Abs(coordinate - afgerond) < 1e-7;
+    }
+
     // Input-ophalende functie die geen waarschuwing over mogelijke null-waardes geeft
     static string NonNullInput()
     {
         while (true)
         {
-            string? input = Console.ReadLine();
+            string? input = Console.ReadLine().ToLower();
 
             if (String.IsNullOrWhiteSpace(input))
             {

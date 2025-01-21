@@ -7,7 +7,6 @@ internal class Soort
     private string _soortNaam;
     private string _type;
     private string _categorie;
-    private int _hoeVaakDeSoortVoorkomt;
     private char _oorsprong;
 
     public int Id
@@ -91,22 +90,6 @@ internal class Soort
         }
     }
 
-    public int HoeVaakDeSoortVoorkomt
-    {
-        get { return _hoeVaakDeSoortVoorkomt; }
-        set
-        {
-            if (value > 0 || value < 1000000000)
-            {
-                _hoeVaakDeSoortVoorkomt = value;
-            }
-            else
-            {
-                throw new ArgumentException("hoe vaak de soort voorkomt is ongeldig");
-            }
-        }
-    }
-
     public char Oorsprong
     {
         get { return _oorsprong; }
@@ -126,14 +109,13 @@ internal class Soort
         }
     }
 
-    public Soort(int id, string wetenschappelijkeNaam, string soortNaam, string type, string categorie, int hoeVaakDeSoortVoorkomt, char oorsprong)
+    public Soort(int id, string wetenschappelijkeNaam, string soortNaam, string type, string categorie, char oorsprong)
     {
         Id = id;
         WetenschappelijkeNaam = wetenschappelijkeNaam;
         SoortNaam = soortNaam;
         Type = type;
         Categorie = categorie;
-        HoeVaakDeSoortVoorkomt = hoeVaakDeSoortVoorkomt ;
         Oorsprong = oorsprong;
     }
 
@@ -145,7 +127,6 @@ internal class Soort
                 Soort naam : {SoortNaam}
                 Type: {Type}
                 Categorie: {Categorie}
-                Hoe vaak komt de soort voor: {HoeVaakDeSoortVoorkomt}
                 Oorsprong: {(Oorsprong == 'e' ? "exoot" : "inheems")}
                 """;
     }

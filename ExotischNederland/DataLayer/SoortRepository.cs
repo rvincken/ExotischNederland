@@ -27,15 +27,14 @@ internal class SoortRepository
         connection.Open();
 
         string insertQuery = @"
-        INSERT INTO Soort (WetenschappelijkeNaam, SoortNaam, Type, Categorie, HoeVaakVoorkomt, Oorsprong)
-        VALUES (@WetenschappelijkeNaam, @SoortNaam, @Type, @Categorie, @HoeVaakVoorkomt, @Oorsprong);";
+        INSERT INTO Soort (WetenschappelijkeNaam, SoortNaam, Type, Categorie, Oorsprong)
+        VALUES (@WetenschappelijkeNaam, @SoortNaam, @Type, @Categorie, @Oorsprong);";
 
         using var command = new SqliteCommand(insertQuery, connection);
         command.Parameters.AddWithValue("@WetenschappelijkeNaam", soort.WetenschappelijkeNaam);
         command.Parameters.AddWithValue("@SoortNaam", soort.SoortNaam);
         command.Parameters.AddWithValue("@Type", soort.Type);
         command.Parameters.AddWithValue("@Categorie", soort.Categorie);
-        command.Parameters.AddWithValue("@HoeVaakVoorkomt", soort.HoeVaakDeSoortVoorkomt);
         command.Parameters.AddWithValue("@Oorsprong", soort.Oorsprong);
 
         command.ExecuteNonQuery();
@@ -61,8 +60,7 @@ internal class SoortRepository
             string soortNaam = reader.GetString(2);
             string type = reader.GetString(3);
             string categorie = reader.GetString(4);
-            int hoeVaakDeSoortVoorkomt = reader.GetInt32(5);
-            char oorsprong = reader.GetChar(6);
+            char oorsprong = reader.GetChar(5);
 
             var soort = new Model.Soort
             (
@@ -71,7 +69,6 @@ internal class SoortRepository
                 soortNaam,
                 type,
                 categorie,
-                hoeVaakDeSoortVoorkomt,
                 oorsprong
             );
 
@@ -103,14 +100,45 @@ internal class SoortRepository
                 reader.GetString(2),
                 reader.GetString(3),
                 reader.GetString(4),
-                reader.GetInt32(5),
-                reader.GetChar(6)
+                reader.GetChar(5)
             );
         }
 
         throw new ArgumentException
         (
             $"SoortRepository.HaalSoortVanIdOp - Kon geen Soort vinden voor ID: {id}"
+        );
+    }
+
+    public Model.Soort HaalSoortVanWetenschapNaamOp(string wetenschapNaam)
+    {
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
+
+        string selectQuery = @"
+            SELECT * FROM Soort
+            WHERE WetenschappelijkeNaam = @WetenschappelijkeNaam;";
+
+        using var command = new SqliteCommand(selectQuery, connection);
+        command.Parameters.AddWithValue("@WetenschappelijkeNaam;", wetenschapNaam);
+
+        using var reader = command.ExecuteReader();
+        if (reader.Read())
+        {
+            return new Model.Soort
+            (
+                reader.GetInt32(0),
+                reader.GetString(1),
+                reader.GetString(2),
+                reader.GetString(3),
+                reader.GetString(4),
+                reader.GetChar(5)
+            );
+        }
+
+        throw new ArgumentException
+        (
+            $"SoortRepository.HaalSoortVanWetenschapNaamOp - Kon geen Soort vinden voor Wetenschap. Naam: {wetenschapNaam}"
         );
     }
 }

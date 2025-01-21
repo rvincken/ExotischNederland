@@ -11,8 +11,7 @@ internal class SoortService
 
     public void RegistreerSoort(
         int id, string wetenschappelijkeNaam, string soortNaam,
-        string type, string categorie,
-        int hoeVaakDeSoortVoorkomt, char oorsprong)
+        string type, string categorie, char oorsprong)
     {
         var soort = new Model.Soort
         (
@@ -21,7 +20,6 @@ internal class SoortService
             soortNaam,
             type,
             categorie,
-            hoeVaakDeSoortVoorkomt,
             oorsprong
         );
 
@@ -36,5 +34,10 @@ internal class SoortService
     public Model.Soort KrijgSoortVanId(int id)
     {
         return _repository.HaalSoortVanIdOp(id);
+    }
+
+    public Model.Soort KrijgSoortVanWetenschapNaam(string wetenschapNaam)
+    {
+        return _repository.HaalSoortVanWetenschapNaamOp(wetenschapNaam);
     }
 }
