@@ -1,0 +1,50 @@
+@startuml
+left to right direction
+    class Soort {
+        - WetenschappelijkeNaam: string
+        - SoortNaam: string
+        - HoeVaakDeSoortVoorkomt: int
+        - Oorsprong: char
+        - Type: string
+        - Categorie: string
+        - Id: int
+                + callContact()       
+}
+    class Foto {
+        - Id: int 
+        - Afbeelding: byte
+                + callContact()       
+}
+ class Gebruiker {
+        - Naam: string
+        - Geslacht: char
+        - Taal: string 
+        - Email: string
+        - Weergavenaam: string
+        - Id: int
+        - Biografie: string 
+        - Geboortejaar: int 
+        - Telefoonnummer: long
+        - Land: string 
+        - Rol: string 
+                + callContact()       
+}
+   class Locatie {
+        - Locatienaam: string
+        - Provincie: string 
+        - Breedtegraad: double 
+        - Lengtegraad: double
+                + callContact()       
+}
+class Waarneming {
+        - Id: int 
+        - WaarnemerId: int
+        - FotoId: int
+        - LocatieId: int
+        - SoortId: int
+        - Omschrijving: string
+        - Datum: string
+        - Tijd: string
+                + callContact()       
+}
+@enduml
