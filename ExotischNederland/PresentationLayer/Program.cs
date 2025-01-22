@@ -82,12 +82,14 @@ internal class Program
 
     static Gebruiker Login()
     {
-        while (true)
+        bool Inloggen = true;
+        while (Inloggen)
         {
             Console.WriteLine("""
                 Kies een actie:
                 (1) Inloggen
                 (2) Registreren
+                (3) Afsluiten
                 """);
 
             String keuze = NonNullInput();
@@ -95,6 +97,7 @@ internal class Program
             switch (keuze)
             {
                 case "1":
+                    Console.Clear();
                     Console.WriteLine("\nLOGIN");
                     Console.WriteLine("-----");
                     try
@@ -131,8 +134,20 @@ internal class Program
                         Console.WriteLine($"Registratie mislukt: {ex.Message}");
                     }
                     break;
+                case "3":
+                    try
+                    {
+                        Console.WriteLine("Bedankt voor het gebruiken van het Exotisch Nederland programma.");
+                        Environment.Exit(0);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Fout bij afsluiten: {ex.Message}");
+                    }
+                    break;
             }
         }
+        return null;
     }
 
     static void RegistreerNieuweGebruiker()
