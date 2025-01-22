@@ -16,7 +16,7 @@ internal class Gebruiker
     public string Naam
     {
         get{return _naam;}
-        set
+        private set
         {
             if (value.Length > 2 && value.Length < 40)
             {
@@ -32,7 +32,7 @@ internal class Gebruiker
     public char Geslacht
     {
         get{return _geslacht;}
-        set
+        private set
         {
             value = char.ToLower(value);
             if (value == 'm' || value == 'v')
@@ -50,7 +50,7 @@ internal class Gebruiker
     public string Taal
     {
         get{return _taal;}
-        set
+        private set
         {
             value = value.ToLower();
             if (value == "nl" || value == "en")
@@ -69,7 +69,7 @@ internal class Gebruiker
     public string Email
     {
         get{return _email;}
-        set
+        private set
         {
             if (value.Contains('@'))
             {
@@ -87,7 +87,7 @@ internal class Gebruiker
 
     public string Weergavenaam 
     {get{return _weergavenaam;}
-    set
+    private set
         {
             if (value.Length <= 20)
                 {
@@ -105,7 +105,7 @@ internal class Gebruiker
     public string Biografie 
     {
         get{return _biografie;}
-        set
+        private set
         {
             if (value.Length <= 200)
             {
@@ -122,7 +122,7 @@ internal class Gebruiker
     public int Geboortejaar
     {
         get {return _geboortejaar;}
-        set
+        private set
         {
             if (value <= DateTime.Now.Year)
             {
@@ -141,7 +141,7 @@ internal class Gebruiker
     public string Telefoonnummer 
     {
         get{return _telefoonnummer;}
-        set
+        private set
         {
             if (value.ToString().Length == 10)
             {
@@ -156,7 +156,7 @@ internal class Gebruiker
     public string Land 
     {
         get{return _land;}
-        set
+        private set
         {
             _land = value;
         }
@@ -164,7 +164,7 @@ internal class Gebruiker
     public int Id
     {
         get{return _id;}
-        set
+        private set
         {
             if (value.ToString().Length == 7)
             {
@@ -181,7 +181,7 @@ internal class Gebruiker
     public string Rol
     {
         get{return _rol;}
-        set
+        private set
         {
             if (value == "vrijwilliger" || value == "medewerker")
             {
