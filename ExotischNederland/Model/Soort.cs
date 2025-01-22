@@ -12,7 +12,7 @@ internal class Soort
     public int Id
     {
         get { return _id; }
-        set
+        private set
         {
             if (value.ToString().Length == 7)
             {
@@ -28,7 +28,7 @@ internal class Soort
     public string WetenschappelijkeNaam
     {
         get { return _wetenschappelijkeNaam; }
-        set
+        private set
         {
             if (value.Length <= 50)
             {
@@ -45,7 +45,7 @@ internal class Soort
     public string SoortNaam
     {
         get { return _soortNaam; }
-        set
+        private set
         {
             if (value.Length <= 50)
             {
@@ -61,7 +61,7 @@ internal class Soort
     public string Type
     {
         get { return _type; }
-        set
+        private set
         {
             if (value == "plant" || value == "dier")
             {
@@ -77,7 +77,7 @@ internal class Soort
     public string Categorie
     {
         get { return _categorie; }
-        set
+        private set
         {
             if (value.Length <= 50 && value.Length != 0)
             {
@@ -93,7 +93,7 @@ internal class Soort
     public char Oorsprong
     {
         get { return _oorsprong; }
-        set
+        private set
         {
             value = char.ToLower(value);
             if (value == 'e' || value == 'i')
