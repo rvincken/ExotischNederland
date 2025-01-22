@@ -1,7 +1,7 @@
 ﻿/*
     Project name: Exotisch Nederland Casus
     Project group: Arch BTW
-    Project members: Rick Vincken, Daan Ros, D'vaughn Dassen, Sylas Barendse | Klas B1D
+    Project members: Rick Vincken, Daan Ros, D'vaughn Dassen, Silas Barendse | Klas B1D
 
     Created: 01/16/2025
 
@@ -239,7 +239,7 @@ internal class Program
 
         waarnemingService.RegistreerWaarneming(1000001, gebruiker, foto, locatie, soort, omschrijving, datum, tijd);
 
-        Console.WriteLine("Waarmeming is geregistreerd.");
+        Console.WriteLine("Waarneming is geregistreerd.");
     }
 
     static Soort VraagSoort()
