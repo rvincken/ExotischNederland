@@ -136,10 +136,24 @@ internal class Waarneming
                 Omschrijving: {Omschrijving}
                 Datum: {Datum}
                 Tijd: {Tijd}
+
                 Waarnemer ID: {Waarnemer.Id}
+                Waarnemer email: {Waarnemer.Email}
+                Waarnemer naam: {Waarnemer.Naam}
+
                 Foto ID: {Foto.Id}
+
                 Locatie ID: {Locatie.Id}
+                Locatie plaats: {Locatie.Locatienaam}
+                Locatie provincie: {Locatie.Provincie}
+                Locatie breedtegraad: {Locatie.Breedtegraad}
+                Locatie lengtegraad: {Locatie.Lengtegraad}
+
                 Soort ID: {Soort.Id}
+                Soort Wetenschap. Naam: {Soort.WetenschappelijkeNaam}
+                Soort Naam: {Soort.SoortNaam}
+                Soort Type: {Soort.Type}
+                Soort Oorsprong: {Soort.Oorsprong}
                 """;
     }
 }
