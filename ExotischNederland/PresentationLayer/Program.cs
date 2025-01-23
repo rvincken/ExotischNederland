@@ -126,6 +126,7 @@ internal class Program
                 case "2":
                     try
                     {
+                        Console.Clear();
                         RegistreerNieuweGebruiker();
                         Console.WriteLine("Registratie succesvol! Log nu in om verder te gaan.");
                     }
@@ -137,6 +138,7 @@ internal class Program
                 case "3":
                     try
                     {
+                        Console.Clear();
                         Console.WriteLine("Bedankt voor het gebruiken van het Exotisch Nederland programma.");
                         Environment.Exit(0);
                     }
