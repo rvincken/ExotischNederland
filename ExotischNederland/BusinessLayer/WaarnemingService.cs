@@ -26,4 +26,9 @@ internal class WaarnemingService
     {
         return _repository.HaalAlleWaarnemingenOp();
     }
+
+    public List<Model.Waarneming> FilterWaarneming(List<Model.Soort>soorten)
+    {
+        return _repository.FilterWaarnemingen(soorten);
+    }
 }

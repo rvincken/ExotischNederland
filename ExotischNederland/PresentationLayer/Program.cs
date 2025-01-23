@@ -1,7 +1,7 @@
 ﻿/*
     Project name: Exotisch Nederland Casus
     Project group: Arch BTW
-    Project members: Rick Vincken, Daan Ros, D'vaughn Dassen, Sylas Barendse | Klas B1D
+    Project members: Rick Vincken, Daan Ros, D'vaughn Dassen, Silas Barendse | Klas B1D
 
     Created: 01/16/2025
 
@@ -11,6 +11,7 @@
 */
 
 using ExotischNederland.BusinessLayer;
+using ExotischNederland.DataLayer;
 using ExotischNederland.Model;
 
 namespace ExotischNederland.PresentationLayer;
@@ -94,7 +95,7 @@ internal class Program
             2000,
             "nederland",
             "email@email.com",
-            1234567890,
+            "1234567890",
             "sjaakdegoat",
             'm',
             "ik was geboren vanaf een heel jonge leeftijd"
@@ -109,23 +110,78 @@ internal class Program
     static void WaarnemingenBekijken()
     {
         bool blijfVragen = true;
-
+        
+        
+        
         while (blijfVragen)
         {
             Console.WriteLine("""
                               Kies een actie:
                               (1) Alle waarnemingen bekijken
-                              (2) Stoppen
+                              (2) filteren op oorsporng
+                              (3) Stoppen
                               """);
             string actie = NonNullInput();
-
+            List<Waarneming> AlleWaarnemingen = new List<Waarneming>(waarnemingService.KrijgAlleWaarnemingen());            
             switch (actie)
             {
+                    
                 // Implementeer waarneming bekijken acties
                 // Schuif "(2) Stoppen" naar een verder getal indien meer acties zijn toegevoegd
+                case "1":
+                    AlleWaarnemingenBekijken(AlleWaarnemingen);
+                    break;
+
                 case "2":
+                    FilterenOpOorsprong();
+                    break;
+                    
+                    
+                case "3":
                     blijfVragen = false;
                     break;
+            }
+        }
+        
+        static void AlleWaarnemingenBekijken(List<Waarneming> AlleWaarnemingen)
+        {
+            
+
+            foreach (Waarneming waarneming in AlleWaarnemingen)
+            {
+                Console.WriteLine(waarneming.ToString());
+            }
+            
+        }
+
+        static void FilterenOpOorsprong()
+        {
+            List<Model.Soort> gefilterdeSoorten = new List<Model.Soort>(); 
+            List<Model.Waarneming> gefilterdeWaarneming = new List<Model.Waarneming>();
+            Console.WriteLine("""
+                              Kies oorsprong:
+                              Inheems(1)
+                              Exoot(2)  
+                              """);
+            string oorsprongFilter = NonNullInput();
+            switch (oorsprongFilter)
+            {
+
+                case "1":
+                    gefilterdeSoorten = soortService.FilterSoorten('i');
+                    
+                    break;
+                case "2":
+                    
+                    gefilterdeSoorten = soortService.FilterSoorten('e'); 
+                    break; 
+                    
+
+            }  
+            gefilterdeWaarneming = waarnemingService.FilterWaarneming(gefilterdeSoorten);
+            foreach (Waarneming waarneming in gefilterdeWaarneming)
+            {
+                Console.WriteLine(waarneming.ToString());
             }
         }
     }

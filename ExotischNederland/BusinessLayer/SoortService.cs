@@ -32,4 +32,14 @@ internal class SoortService
     {
         return _repository.HaalAlleSoortenOp();
     }
+
+    public Model.Soort KrijgSoortVanId(int id)
+    {
+        return _repository.HaalSoortVanIdOp(id);
+    }
+
+    public List<Model.Soort> FilterSoorten(char filter)
+    {
+        return _repository.FilterSoortenOorsprong(filter);
+    }
 }
