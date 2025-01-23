@@ -237,9 +237,19 @@ internal class Program
 
         Console.WriteLine($"Datum: {datum} Tijd: {tijd} (Opgehaald uit systeemklok)");
 
-        waarnemingService.RegistreerWaarneming(1000001, gebruiker, foto, locatie, soort, omschrijving, datum, tijd);
+        Console.WriteLine(new Waarneming(1000000, foto, gebruiker, locatie, soort, omschrijving, datum, tijd).ToString());
+        Console.WriteLine("Klopt de volgende informatie? (Waarneming ID is tijdelijk)");
 
-        Console.WriteLine("Waarneming is geregistreerd.");
+        if (KrijgKeuze(["ja", "nee"]) == "ja")
+        {
+            waarnemingService.RegistreerWaarneming(1000000, gebruiker, foto, locatie, soort, omschrijving, datum, tijd);
+
+            Console.WriteLine("Waarneming is geregistreerd.");
+        }
+        else
+        {
+            Console.WriteLine("Waarneming is niet geregistreerd.");
+        }
     }
 
     static Soort VraagSoort()
