@@ -10,12 +10,12 @@ internal class WaarnemingService
     }
 
     public void RegistreerWaarneming
-        (int id, Model.Gebruiker waarnemer, Model.Foto foto, Model.Locatie locatie, Model.Soort soort,
+        (Model.Gebruiker waarnemer, Model.Foto foto, Model.Locatie locatie, Model.Soort soort,
         string omschrijving, string datum, string tijd)
     {
         var waarneming = new Model.Waarneming
         (   
-            id, foto, waarnemer, locatie, soort,
+            1, foto, waarnemer, locatie, soort,
             omschrijving, datum, tijd
         );
 

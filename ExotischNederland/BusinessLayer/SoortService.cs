@@ -10,12 +10,12 @@ internal class SoortService
     }
 
     public void RegistreerSoort(
-        int id, string wetenschappelijkeNaam, string soortNaam,
+        string wetenschappelijkeNaam, string soortNaam,
         string type, string categorie, char oorsprong)
     {
         var soort = new Model.Soort
         (
-            id,
+            1,
             wetenschappelijkeNaam,
             soortNaam,
             type,

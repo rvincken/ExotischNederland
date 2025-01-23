@@ -182,7 +182,7 @@ internal class Program
 
                 var nieuweGebruiker = new Gebruiker
                     (
-                        1000001, rol, naam, taal, int.Parse(geboortejaar), land, email,
+                        1, rol, naam, taal, int.Parse(geboortejaar), land, email,
                         telefoonnummer, weergavenaam, geslacht, biografie
                     );
 
@@ -193,7 +193,6 @@ internal class Program
                 }
 
                 gebruikerService.RegistreerGebruiker(
-                    1000001,
                     rol,
                     naam,
                     taal,
@@ -237,12 +236,12 @@ internal class Program
 
         Console.WriteLine($"Datum: {datum} Tijd: {tijd} (Opgehaald uit systeemklok)");
 
-        Console.WriteLine(new Waarneming(1000001, foto, gebruiker, locatie, soort, omschrijving, datum, tijd).ToString());
+        Console.WriteLine(new Waarneming(1, foto, gebruiker, locatie, soort, omschrijving, datum, tijd).ToString());
         Console.WriteLine("Klopt de volgende informatie? (ja/nee) (Waarneming ID is tijdelijk)");
 
         if (KrijgKeuze(["ja", "nee"]) == "ja")
         {
-            waarnemingService.RegistreerWaarneming(1000001, gebruiker, foto, locatie, soort, omschrijving, datum, tijd);
+            waarnemingService.RegistreerWaarneming(gebruiker, foto, locatie, soort, omschrijving, datum, tijd);
 
             Console.WriteLine("Waarneming is geregistreerd.");
         }
@@ -281,7 +280,7 @@ internal class Program
             Console.WriteLine("Is de waargenomen soort inheems (i) of exoot (e) in Nederland?");
             char oorsprong = char.Parse(KrijgKeuze(["e", "i"]));
 
-            soortService.RegistreerSoort(1000001, wetenschapNaam, soortNaam, type, categorie, oorsprong);
+            soortService.RegistreerSoort(wetenschapNaam, soortNaam, type, categorie, oorsprong);
 
             Console.WriteLine("Nieuwe soort is geregistreerd.");
 
@@ -314,7 +313,7 @@ internal class Program
                 "overijssel", "utrecht", "zeeland", "zuid-holland"
             ]);
 
-            locatieService.RegistreerLocatie(1000000, locatienaam, provincie);
+            locatieService.RegistreerLocatie(locatienaam, provincie);
 
             Console.WriteLine("Nieuwe locatie is geregistreerd.");
 
@@ -341,7 +340,7 @@ internal class Program
             {
                 Console.WriteLine("Deze Foto is origineel.");
 
-                fotoService.RegistreerFoto(1000001, afbeelding);
+                fotoService.RegistreerFoto(afbeelding);
 
                 Console.WriteLine("Foto is geregistreerd.");
 

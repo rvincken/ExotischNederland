@@ -9,16 +9,16 @@ internal class FotoService
         _repository = new DataLayer.FotoRepository();
     }
 
-    public void RegistreerFoto(int id, string afbeeldingPad)
+    public void RegistreerFoto(string afbeeldingPad)
     {
-        var foto = new Model.Foto(id, afbeeldingPad);
+        var foto = new Model.Foto(1, afbeeldingPad);
 
         _repository.VoegFotoToe(foto);
     }
 
-    public void RegistreerFoto(int id, byte[] afbeelding)
+    public void RegistreerFoto(byte[] afbeelding)
     {
-        var foto = new Model.Foto(id, afbeelding);
+        var foto = new Model.Foto(1, afbeelding);
 
         _repository.VoegFotoToe(foto);
     }

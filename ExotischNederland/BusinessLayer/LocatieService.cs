@@ -10,11 +10,11 @@ internal class LocatieService
     }
 
     public void RegistreerLocatie
-        (int id, string locatienaam, string provincie)
+        (string locatienaam, string provincie)
     {
         var locatie = new Model.Locatie
         (
-            id, locatienaam, provincie
+            1, locatienaam, provincie
         );
 
         _repository.VoegLocatieToe(locatie);
