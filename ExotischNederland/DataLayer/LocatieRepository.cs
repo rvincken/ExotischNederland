@@ -13,8 +13,6 @@ internal class LocatieRepository
 
         _connectionString = $"Data Source={databasePath}";
 
-        Console.WriteLine(_connectionString);
-
         InitializeDatabase();
     }
 
