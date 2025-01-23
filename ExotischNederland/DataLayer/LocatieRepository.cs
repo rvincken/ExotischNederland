@@ -29,14 +29,12 @@ internal class LocatieRepository
         connection.Open();
 
         string insertQuery = @"
-            INSERT INTO Locatie (Locatienaam, Provincie, Breedtegraad, Lengtegraad)
-            VALUES (@Locatienaam, @Provincie, @Breedtegraad, @Lengtegraad);";
+            INSERT INTO Locatie (Locatienaam, Provincie)
+            VALUES (@Locatienaam, @Provincie);";
 
         using var command = new SqliteCommand(insertQuery, connection);
         command.Parameters.AddWithValue("@Locatienaam", locatie.Locatienaam);
         command.Parameters.AddWithValue("@Provincie", locatie.Provincie);
-        command.Parameters.AddWithValue("@Breedtegraad", locatie.Breedtegraad);
-        command.Parameters.AddWithValue("@Lengtegraad", locatie.Lengtegraad);
 
         command.ExecuteNonQuery();
     }
@@ -59,9 +57,7 @@ internal class LocatieRepository
             int id = reader.GetInt32(0);
             string locatienaam = reader.GetString(1);
             string provincie = reader.GetString(2);
-            double breedtegraad = reader.GetDouble(3);
-            double lengtegraad = reader.GetDouble(4);
-            var locatie = new Model.Locatie(id, locatienaam, provincie, breedtegraad, lengtegraad);
+            var locatie = new Model.Locatie(id, locatienaam, provincie);
 
             locaties.Add(locatie);
         }
@@ -87,9 +83,7 @@ internal class LocatieRepository
             (
                 reader.GetInt32(0),
                 reader.GetString(1),
-                reader.GetString(2),
-                reader.GetDouble(3),
-                reader.GetDouble(4)
+                reader.GetString(2)
             );
         }
 
@@ -118,9 +112,7 @@ internal class LocatieRepository
             (
                 reader.GetInt32(0),
                 reader.GetString(1),
-                reader.GetString(2),
-                reader.GetDouble(3),
-                reader.GetDouble(4)
+                reader.GetString(2)
             );
         }
 

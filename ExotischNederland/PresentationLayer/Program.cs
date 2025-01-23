@@ -267,7 +267,7 @@ internal class Program
         }
         catch(Exception)
         {
-            Console.WriteLine("Soort bestaat nog niet in database. Extra informatie wordt gevraagd.");
+            Console.WriteLine("Soort bestaat nog geregistreerd. Extra informatie wordt gevraagd.");
 
             Console.WriteLine("Wat is de naam van de waargenomen soort?");
             string soortNaam = NonNullInput();
@@ -283,7 +283,7 @@ internal class Program
 
             soortService.RegistreerSoort(1000001, wetenschapNaam, soortNaam, type, categorie, oorsprong);
 
-            Console.WriteLine("Nieuwe soort is toegevoegd aan database.");
+            Console.WriteLine("Nieuwe soort is geregistreerd.");
 
             return soortService.KrijgSoortVanWetenschapNaam(wetenschapNaam);
         }
@@ -298,15 +298,15 @@ internal class Program
         {
             Locatie locatie = locatieService.KrijgLocatieVanLocatieNaam(locatienaam);
 
-            Console.WriteLine("Locatie is al geregistreerd in database en wordt gekoppeld aan waarneming.");
+            Console.WriteLine("Locatie is al geregistreerd en wordt gekoppeld aan waarneming.");
 
             return locatie;
         }
         catch(Exception)
         {
-            Console.WriteLine("Locatie bestaat nog niet in database. Extra informatie wordt gevraagd.");
+            Console.WriteLine("Locatie is nog niet geregistreerd. Extra informatie wordt gevraagd.");
 
-            Console.WriteLine("In welke provincie vond de waarneming plaats?");
+            Console.WriteLine("In welke provincie is deze locatie?");
             string provincie = KrijgKeuze
             ([
                 "drenthe", "flevoland", "friesland", "gelderland",
@@ -314,15 +314,9 @@ internal class Program
                 "overijssel", "utrecht", "zeeland", "zuid-holland"
             ]);
 
-            Console.WriteLine("Geef de breedtegraad van de waarneming afgekort op 6 decimalen. (coordinaat)");
-            double breedtegraad = GetValidCoordinate();
+            locatieService.RegistreerLocatie(1000000, locatienaam, provincie);
 
-            Console.WriteLine("Geef de lengtegraad van de waarneming afgekort op 6 decimalen. (coordinaat)");
-            double lengtegraad = GetValidCoordinate();
-
-            locatieService.RegistreerLocatie(1000001, locatienaam, provincie, breedtegraad, lengtegraad);
-
-            Console.WriteLine("Nieuwe locatie is geregistreerd in database.");
+            Console.WriteLine("Nieuwe locatie is geregistreerd.");
 
             return locatieService.KrijgLocatieVanLocatieNaam(locatienaam);
         }
@@ -339,17 +333,17 @@ internal class Program
             {
                 var foto = fotoService.KrijgFotoVanByteArray(afbeelding);
 
-                Console.WriteLine("Afbeelding bestaat al in database. Geef alsjeblieft een originele afbeelding.");
+                Console.WriteLine("Afbeelding is al gebruikt. Geef alsjeblieft een originele afbeelding.");
 
                 continue;
             }
             catch (Exception)
             {
-                Console.WriteLine("Deze Foto is origineel en bestaat nog niet in het database.");
+                Console.WriteLine("Deze Foto is origineel.");
 
                 fotoService.RegistreerFoto(1000001, afbeelding);
 
-                Console.WriteLine("Foto is toegevoegd aan database.");
+                Console.WriteLine("Foto is geregistreerd.");
 
                 return fotoService.KrijgFotoVanByteArray(afbeelding);
             }
@@ -395,54 +389,6 @@ internal class Program
                 Console.WriteLine("Ongeldige keuze.");
             }
         }
-    }
-
-    static int GetValidInt()
-    {
-        while (true)
-        {
-            try
-            {
-                return int.Parse(NonNullInput());
-            }
-            catch (Exception)
-            {
-                {
-                    Console.WriteLine("Ongeldig getal gegeven.");
-                }
-            }
-        }
-    }
-
-    static double GetValidCoordinate()
-    {
-        while (true)
-        {
-            try
-            {
-                double input = double.Parse(NonNullInput());
-
-                if (IsValidCoordinate(input))
-                {
-                    return input;
-                }
-                else
-                {
-                    Console.WriteLine("Ongeldige invoer.");
-                }
-            }
-            catch
-            {
-                Console.WriteLine("Ongeldig getal");
-            }
-        }
-    }
-
-    static bool IsValidCoordinate(double coordinate)
-    {
-        double afgerond = Math.Round(coordinate, 6);
-
-        return Math.Abs(coordinate - afgerond) < 1e-7;
     }
 
     static byte[] VraagLocalImage()

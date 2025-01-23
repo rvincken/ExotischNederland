@@ -146,8 +146,6 @@ internal class Waarneming
                 Locatie ID: {Locatie.Id}
                 Locatie plaats: {Locatie.Locatienaam}
                 Locatie provincie: {Locatie.Provincie}
-                Locatie breedtegraad: {Locatie.Breedtegraad}
-                Locatie lengtegraad: {Locatie.Lengtegraad}
 
                 Soort ID: {Soort.Id}
                 Soort Wetenschap. Naam: {Soort.WetenschappelijkeNaam}

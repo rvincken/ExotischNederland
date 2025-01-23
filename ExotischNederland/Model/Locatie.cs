@@ -7,8 +7,6 @@ internal class Locatie
     private int _id;
     private string _locatienaam;
     private string _provincie;
-    private double _breedtegraad;
-    private double _lengtegraad;
 
     public int Id
     {
@@ -25,17 +23,7 @@ internal class Locatie
         get { return _provincie; }
     }
 
-    public double Breedtegraad
-    {
-        get { return _breedtegraad; }
-    }
-
-    public double Lengtegraad
-    {
-        get { return _lengtegraad; }
-    }
-
-    public Locatie(int id, string locatienaam, string provincie, double breedtegraad, double lengtegraad)
+    public Locatie(int id, string locatienaam, string provincie)
     {
         if (IsValidName(locatienaam))
         {
@@ -62,24 +50,6 @@ internal class Locatie
         else
         {
             throw new ArgumentException("Provincie is niet geldig.");
-        }
-
-        if (IsValidCoordinate(breedtegraad))
-        {
-            _breedtegraad = breedtegraad;
-        }
-        else
-        {
-            throw new ArgumentException("Breedtegraad moet exact 6 decimalen hebben.");
-        }
-
-        if (IsValidCoordinate(lengtegraad))
-        {
-            _lengtegraad = lengtegraad;
-        }
-        else
-        {
-            throw new ArgumentException("Lengtegraad moet exact 6 decimalen hebben.");
         }
     }
 
@@ -148,13 +118,6 @@ internal class Locatie
         return true;
     }
 
-    private bool IsValidCoordinate(double coordinate)
-    {
-        double afgerond = Math.Round(coordinate, 6);
-
-        return Math.Abs(coordinate - afgerond) < 1e-7;
-    }
-
     private bool IsValidId(int id)
     {
         return id.ToString().Length == 7;
@@ -166,8 +129,6 @@ internal class Locatie
                 Id: {Id}
                 Locatienaam: {Locatienaam}
                 Provincie: {Provincie}
-                Breedtegraad: {Breedtegraad}
-                Lengtegraad: {Lengtegraad}
                 """";
     }
 }
