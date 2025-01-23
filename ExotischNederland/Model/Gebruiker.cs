@@ -164,18 +164,7 @@ internal class Gebruiker
     public int Id
     {
         get{return _id;}
-        private set
-        {
-            if (value.ToString().Length == 7)
-            {
-                _id = value;
-            }
-            else
-            {
-                throw new ArgumentException("Gebruiker.Id moet 7 nummers zijn, ingevoerde waarden is meer/minder");
-            }
-
-        }
+        private set { _id = value; }
     }
 
     public string Rol

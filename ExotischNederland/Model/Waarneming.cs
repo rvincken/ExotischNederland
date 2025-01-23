@@ -16,19 +16,7 @@ internal class Waarneming
     public int Id
     {
         get { return _id; }
-        private set 
-        {
-            if (value.ToString().Length == 7)
-            {
-                _id = value;
-            }
-            else
-            {
-                throw new ArgumentException(
-                    $"Waarneming.Id moet 7 getallen lang zijn, " +
-                    $"Maar een getal van {value} is gegeven.");
-            }
-        }
+        private set { _id = value; }
     }
 
     public string Omschrijving

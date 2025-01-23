@@ -102,6 +102,7 @@ internal class WaarnemingRepository
             WHERE Wid = @Wid;";
 
         using var command = new SqliteCommand(selectQuery, connection);
+        command.Parameters.AddWithValue("@Wid", id);
 
         using var reader = command.ExecuteReader();
         if (reader.Read())

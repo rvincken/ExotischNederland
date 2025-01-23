@@ -8,19 +8,7 @@ internal class Foto
     public int Id
     {
         get { return _id; }
-        private set 
-        {
-            if (value.ToString().Length == 7)
-            {
-                _id = value;
-            }
-            else
-            {
-                throw new ArgumentException(
-                    $"{this}.Id moet 7 getallen lang zijn, " +
-                    $"maar een getal van {value} is gegeven.");
-            }
-        }
+        private set {  _id = value; }
     }
 
     public byte[] Afbeelding

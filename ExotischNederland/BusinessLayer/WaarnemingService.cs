@@ -26,4 +26,9 @@ internal class WaarnemingService
     {
         return _repository.HaalAlleWaarnemingenOp();
     }
+
+    public Model.Waarneming KrijgWaarnemingVanId(int id)
+    {
+        return _repository.HaalWaarnemingVanIdOp(id);
+    }
 }

@@ -12,17 +12,7 @@ internal class Soort
     public int Id
     {
         get { return _id; }
-        private set
-        {
-            if (value.ToString().Length == 7)
-            {
-                _id = value;
-            }
-            else
-            {
-                throw new ArgumentException("soort id moet 7 getallen lang zijn");
-            }
-        }
+        private set { _id = value; }
     }
 
     public string WetenschappelijkeNaam

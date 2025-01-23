@@ -107,17 +107,17 @@ internal class GebruikerRepository
         using var reader = command.ExecuteReader();
         if (reader.Read())
         {
-            int gid = reader.GetInt32(0);
-            string rol = reader.GetString(1);
-            string naam = reader.GetString(2);
-            char geslacht = reader.GetChar(3);
-            int geboortejaar = reader.GetInt32(4);
-            string taal = reader.GetString(5);
-            string land = reader.GetString(6);
-            string email = reader.GetString(7);
-            string telefoonnummer = reader.GetString(8);
-            string weergavenaam = reader.GetString(9);
-            string biografie = reader.GetString(10);
+            int gid = reader.GetInt32(reader.GetOrdinal("Gid"));
+            string rol = reader.GetString(reader.GetOrdinal("Rol"));
+            string naam = reader.GetString(reader.GetOrdinal("Naam"));
+            char geslacht = reader.GetChar(reader.GetOrdinal("Geslacht"));
+            int geboortejaar = reader.GetInt32(reader.GetOrdinal("Geboortejaar"));
+            string taal = reader.GetString(reader.GetOrdinal("Taal"));
+            string land = reader.GetString(reader.GetOrdinal("Land"));
+            string email = reader.GetString(reader.GetOrdinal("Email"));
+            string telefoonnummer = reader.GetString(reader.GetOrdinal("Telefoonnummer"));
+            string weergavenaam = reader.GetString(reader.GetOrdinal("Weergavenaam"));
+            string biografie = reader.GetString(reader.GetOrdinal("Biografie"));
 
             var gebruiker = new Model.Gebruiker(gid, rol, naam, taal, geboortejaar, land, email, telefoonnummer, weergavenaam, geslacht, biografie);
 

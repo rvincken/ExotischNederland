@@ -182,7 +182,7 @@ internal class Program
 
                 var nieuweGebruiker = new Gebruiker
                     (
-                        1000000, rol, naam, taal, int.Parse(geboortejaar), land, email,
+                        1000001, rol, naam, taal, int.Parse(geboortejaar), land, email,
                         telefoonnummer, weergavenaam, geslacht, biografie
                     );
 
@@ -193,7 +193,7 @@ internal class Program
                 }
 
                 gebruikerService.RegistreerGebruiker(
-                    1000000,
+                    1000001,
                     rol,
                     naam,
                     taal,
@@ -237,12 +237,12 @@ internal class Program
 
         Console.WriteLine($"Datum: {datum} Tijd: {tijd} (Opgehaald uit systeemklok)");
 
-        Console.WriteLine(new Waarneming(1000000, foto, gebruiker, locatie, soort, omschrijving, datum, tijd).ToString());
-        Console.WriteLine("Klopt de volgende informatie? (Waarneming ID is tijdelijk)");
+        Console.WriteLine(new Waarneming(1000001, foto, gebruiker, locatie, soort, omschrijving, datum, tijd).ToString());
+        Console.WriteLine("Klopt de volgende informatie? (ja/nee) (Waarneming ID is tijdelijk)");
 
         if (KrijgKeuze(["ja", "nee"]) == "ja")
         {
-            waarnemingService.RegistreerWaarneming(1000000, gebruiker, foto, locatie, soort, omschrijving, datum, tijd);
+            waarnemingService.RegistreerWaarneming(1000001, gebruiker, foto, locatie, soort, omschrijving, datum, tijd);
 
             Console.WriteLine("Waarneming is geregistreerd.");
         }
@@ -267,7 +267,7 @@ internal class Program
         }
         catch(Exception)
         {
-            Console.WriteLine("Soort bestaat nog geregistreerd. Extra informatie wordt gevraagd.");
+            Console.WriteLine("Soort is nog niet geregistreerd. Extra informatie wordt gevraagd.");
 
             Console.WriteLine("Wat is de naam van de waargenomen soort?");
             string soortNaam = NonNullInput();
@@ -359,7 +359,14 @@ internal class Program
             Console.WriteLine("""
                               Kies een actie:
                               (1) Alle waarnemingen bekijken
-                              (2) Stoppen
+                              (2) Filteren op waarnemer email
+                              (3) Filteren op wetenschap. naam
+                              (4) Filteren op type
+                              (5) Filteren op oorsprong
+                              (6) Filteren op provincie
+                              (7) Filteren op plaatsnaam
+                              (8) Waarneming met ID zoeken
+                              (9) Stoppen
                               """);
             string actie = NonNullInput();
 
@@ -367,11 +374,256 @@ internal class Program
             {
                 // Implementeer waarneming bekijken acties
                 // Schuif "(2) Stoppen" naar een verder getal indien meer acties zijn toegevoegd
+                case "1":
+                    AlleWaarnemingenBekijken();
+                    break;
                 case "2":
+                    WaarnemingenVanEmailBekijken();
+                    break;
+                case "3":
+                    WaarnemingenVanWetenschapNaamBekijken();
+                    break;
+                case "4":
+                    WaarnemingenVanTypeBekijken();
+                    break;
+                case "5":
+                    WaarnemingenVanOorsprongBekijken();
+                    break;
+                case "6":
+                    WaarnemingenVanProvincieBekijken();
+                    break;
+                case "7":
+                    WaarnemingenVanPlaatsNaamBekijken();
+                    break;
+                case "8":
+                    WaarnemingVanIdBekijken();
+                    break;
+                case "9":
                     blijfVragen = false;
+                    break;
+                default:
+                    Console.WriteLine("Ongeldige keuze. Probeer alsjeblieft opnieuw.");
                     break;
             }
         }
+    }
+
+    static void AlleWaarnemingenBekijken()
+    {
+        List<Waarneming> waarnemingen = waarnemingService.KrijgAlleWaarnemingen();
+
+        int e = 0;
+        int i = 0;
+
+        foreach (var waarneming in waarnemingen)
+        {
+            Console.WriteLine(waarneming.ToString());
+            if (waarneming.Soort.Oorsprong == 'e')
+            {
+                e++;
+            }
+            else
+            {
+                i++;
+            }
+        }
+
+        Console.WriteLine($"De gehalte van exoten en inheemsen is: {KrijgProcentueelGehalte(e, i)}");
+    }
+
+    static void WaarnemingenVanEmailBekijken()
+    {
+        Console.WriteLine("Geef een gebruikers Email adres om op te filteren.");
+        string email = NonNullInput();
+
+        List<Waarneming> waarnemingen = waarnemingService.KrijgAlleWaarnemingen();
+
+        int e = 0;
+        int i = 0;
+
+        foreach (var waarneming in waarnemingen)
+        {
+            if (waarneming.Waarnemer.Email == email)
+            {
+                Console.WriteLine(waarneming.ToString());
+                if (waarneming.Soort.Oorsprong == 'e')
+                {
+                    e++;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+        }
+
+        Console.WriteLine($"De gehalte van exoten en inheemsen is: {KrijgProcentueelGehalte(e, i)}");
+    }
+
+    static void WaarnemingenVanWetenschapNaamBekijken()
+    {
+        Console.WriteLine("Geef een wetenschappelijke soortnaam om op te filteren.");
+        string wetenschapNaam = NonNullInput();
+
+        List<Waarneming> waarnemingen = waarnemingService.KrijgAlleWaarnemingen();
+
+        int e = 0;
+        int i = 0;
+
+        foreach (var waarneming in waarnemingen)
+        {
+            if (waarneming.Soort.WetenschappelijkeNaam == wetenschapNaam)
+            {
+                Console.WriteLine(waarneming.ToString());
+                if (waarneming.Soort.Oorsprong == 'e')
+                {
+                    e++;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+        }
+
+        Console.WriteLine($"De gehalte van exoten en inheemsen is: {KrijgProcentueelGehalte(e, i)}");
+    }
+
+    static void WaarnemingenVanTypeBekijken()
+    {
+        Console.WriteLine("Geef een type (plant/dier) om op te filteren.");
+        string type = KrijgKeuze(["plant", "dier"]);
+
+        List<Waarneming> waarnemingen = waarnemingService.KrijgAlleWaarnemingen();
+
+        int e = 0;
+        int i = 0;
+
+        foreach (var waarneming in waarnemingen)
+        {
+            if (waarneming.Soort.Type == type)
+            {
+                Console.WriteLine(waarneming.ToString());
+                if (waarneming.Soort.Oorsprong == 'e')
+                {
+                    e++;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+        }
+
+        Console.WriteLine($"De gehalte van exoten en inheemsen is: {KrijgProcentueelGehalte(e, i)}");
+    }
+
+    static void WaarnemingenVanPlaatsNaamBekijken()
+    {
+        Console.WriteLine("Geef een plaatsnaam om op te filteren.");
+        string plaatsnaam = NonNullInput();
+
+        List<Waarneming> waarnemingen = waarnemingService.KrijgAlleWaarnemingen();
+
+        int e = 0;
+        int i = 0;
+
+        foreach (var waarneming in waarnemingen)
+        {
+            if (waarneming.Locatie.Locatienaam == plaatsnaam)
+            {
+                Console.WriteLine(waarneming.ToString());
+                if (waarneming.Soort.Oorsprong == 'e')
+                {
+                    e++;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+        }
+
+        Console.WriteLine($"De gehalte van exoten en inheemsen is: {KrijgProcentueelGehalte(e, i)}");
+    }
+
+    static void WaarnemingenVanProvincieBekijken()
+    {
+        Console.WriteLine("Geef een provincie om op te filteren.");
+        string provincie = KrijgKeuze
+       ([
+                "drenthe", "flevoland", "friesland", "gelderland",
+                "groningen", "limburg", "noord-brabant", "noord-holland",
+                "overijssel", "utrecht", "zeeland", "zuid-holland"
+       ]);
+
+        List<Waarneming> waarnemingen = waarnemingService.KrijgAlleWaarnemingen();
+
+        int e = 0;
+        int i = 0;
+
+        foreach (var waarneming in waarnemingen)
+        {
+            if (waarneming.Locatie.Provincie == provincie)
+            {
+                Console.WriteLine(waarneming.ToString());
+                if (waarneming.Soort.Oorsprong == 'e')
+                {
+                    e++;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+        }
+
+        Console.WriteLine($"De gehalte van exoten en inheemsen is: {KrijgProcentueelGehalte(e, i)}");
+    }
+
+    static void WaarnemingVanIdBekijken()
+    {
+        Console.WriteLine("Geef het waarneming ID om op te zoeken.");
+        int id = GetValidInt();
+
+        try
+        {
+            Console.WriteLine(waarnemingService.KrijgWaarnemingVanId(id).ToString());
+        }
+        catch (ArgumentException)
+        {
+            Console.WriteLine($"Geen waarneming gevonden voor ID: {id}");
+        }
+    }
+
+    static void WaarnemingenVanOorsprongBekijken()
+    {
+        List<Waarneming> waarnemingen = waarnemingService.KrijgAlleWaarnemingen();
+
+        Console.WriteLine("Wilt u filteren op exoot (e) of inheems (i)?");
+        char oorsprong = char.Parse(KrijgKeuze(["e", "i"]));
+
+        foreach (var waarneming in waarnemingen)
+        {
+            if (waarneming.Soort.Oorsprong == oorsprong)
+            {
+                Console.WriteLine(waarneming.ToString());
+            }
+        }
+    }
+
+    public static string KrijgProcentueelGehalte(int groepA, int groepB)
+    {
+        int totaal = groepA + groepB;
+        if (totaal == 0)
+        {
+            return "0%, 0%"; // als beide groepen leeg zijn, is het 0%
+        }
+
+        double percentageA = (double)groepA / totaal * 100;
+        double percentageB = (double)groepB / totaal * 100;
+
+        return $"{Math.Round(percentageA)}%, {Math.Round(percentageB)}%";
     }
 
     static string KrijgKeuze(string[] keuzes)
@@ -403,6 +655,21 @@ internal class Program
             catch (FileNotFoundException ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+        }
+    }
+
+    static int GetValidInt()
+    {
+        while (true)
+        {
+            try
+            {
+                return int.Parse(NonNullInput());
+            }
+            catch
+            {
+                Console.WriteLine("Ongeldig getal.");
             }
         }
     }

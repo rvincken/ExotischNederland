@@ -34,14 +34,7 @@ internal class Locatie
             throw new ArgumentException("Locatienaam bevat getallen of is langer dan 50 karakters.");
         }
 
-        if (IsValidId(id))
-        {
-            _id = id;
-        }
-        else
-        {
-            throw new ArgumentException("Id is niet geldig.");
-        }
+        _id = id;
 
         if (IsValidProvincie(provincie))
         {
@@ -116,11 +109,6 @@ internal class Locatie
         }
 
         return true;
-    }
-
-    private bool IsValidId(int id)
-    {
-        return id.ToString().Length == 7;
     }
 
     public override string ToString()
