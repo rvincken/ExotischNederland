@@ -4,7 +4,7 @@ namespace ExotischNederland.DataLayer;
 
 internal class SoortRepository
 {
-    private readonly string _connectionString = @"Data Source=/mnt/ExotischNederland.db";
+    private readonly string _connectionString = @"Data Source=/database/ExotischNederland.db";
 
     public SoortRepository()
     {
