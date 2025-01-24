@@ -5,7 +5,7 @@ namespace ExotischNederland.DataLayer;
 
 internal class FotoRepository
 {
-    private readonly string _connectionString = @"Data Source=/database/ExotischNederland.db";
+    private readonly string _connectionString = @"Data Source=/home/admin01/database/ExotischNederland.db";
 
     public FotoRepository()
     {

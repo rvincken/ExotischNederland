@@ -5,7 +5,7 @@ namespace ExotischNederland.DataLayer;
 
 internal class WaarnemingRepository
 {
-    private readonly string _connectionString = @"Data Source=/database/ExotischNederland.db";
+    private readonly string _connectionString = @"Data Source=/home/admin01/database/ExotischNederland.db";
     BusinessLayer.FotoService fotoService = new BusinessLayer.FotoService();
     BusinessLayer.GebruikerService gebruikerService = new BusinessLayer.GebruikerService();
     BusinessLayer.LocatieService locatieService = new BusinessLayer.LocatieService();
