@@ -4,15 +4,10 @@ namespace ExotischNederland.DataLayer;
 
 internal class LocatieRepository
 {
-    private readonly string _connectionString;
+    private readonly string _connectionString = @"Data Source=/mnt/ExotischNederland.db";
 
     public LocatieRepository()
     {
-        string baseDirectory = AppContext.BaseDirectory;
-        string databasePath = Path.Combine(baseDirectory, "Database", "ExotischNederland.db");
-
-        _connectionString = $"Data Source={databasePath}";
-
         InitializeDatabase();
     }
 

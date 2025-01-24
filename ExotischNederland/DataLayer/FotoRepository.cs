@@ -5,15 +5,10 @@ namespace ExotischNederland.DataLayer;
 
 internal class FotoRepository
 {
-    private readonly string _connectionString;
+    private readonly string _connectionString = @"Data Source=/mnt/ExotischNederland.db";
 
     public FotoRepository()
     {
-        string baseDirectory = AppContext.BaseDirectory;
-        string databasePath = Path.Combine(baseDirectory, "Database", "ExotischNederland.db");
-
-        _connectionString = $"Data Source={databasePath}";
-
         InitializeDatabase();
     }
 

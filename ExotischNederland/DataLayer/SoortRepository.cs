@@ -4,15 +4,10 @@ namespace ExotischNederland.DataLayer;
 
 internal class SoortRepository
 {
-    private readonly string _connectionString;
+    private readonly string _connectionString = @"Data Source=/mnt/ExotischNederland.db";
 
     public SoortRepository()
     {
-        string baseDirectory = AppContext.BaseDirectory;
-        string databasePath = Path.Combine(baseDirectory, "Database", "ExotischNederland.db");
-
-        _connectionString = $"Data Source={databasePath}";
-
         InitializeDatabase();
     }
 
