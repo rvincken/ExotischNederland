@@ -1,6 +1,6 @@
 # Exotisch Nederland Casusproject
 **Project groep:** Arch BTW
-**Project leden:** Rick Vincken, Daan Ros, D'vaughn Dassen, Sylas Barendse | Klas B1D
+**Project leden:** Rick Vincken, Daan Ros, D'vaughn Dassen, Silas Barendse | Klas B1D
 
 **Gemaakt:** 01/16/2025
 

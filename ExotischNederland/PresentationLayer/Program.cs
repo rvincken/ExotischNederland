@@ -114,6 +114,7 @@ internal class Program
                             break;
                         }
 
+                        Console.Clear();
                         Console.WriteLine($"Welkom terug, {gebruiker.Weergavenaam}!");
                         return gebruiker;
                     }
@@ -126,8 +127,9 @@ internal class Program
                 case "2":
                     try
                     {
+                        Console.Clear();
                         RegistreerNieuweGebruiker();
-                        Console.WriteLine("Registratie succesvol! Log nu in om verder te gaan.");
+                        Console.WriteLine("Log nu in om verder te gaan.");
                     }
                     catch (Exception ex)
                     {
@@ -137,6 +139,7 @@ internal class Program
                 case "3":
                     try
                     {
+                        Console.Clear();
                         Console.WriteLine("Bedankt voor het gebruiken van het Exotisch Nederland programma.");
                         Environment.Exit(0);
                     }
@@ -161,24 +164,34 @@ internal class Program
             {
                 Console.WriteLine("Wat is je rol?: (vrijwilliger/medewerker)");
                 String rol = NonNullInput();
+                Console.Clear();
                 Console.WriteLine("Geef je volledige naam: (2 tot 40 tekens.)");
                 String naam = NonNullInput();
+                Console.Clear();
                 Console.WriteLine("Geef je email adres: ");
                 String email = NonNullInput();
+                Console.Clear();
                 Console.WriteLine("Geef je geslacht: (m/v)");
                 char geslacht = NonNullInput()[0];
+                Console.Clear();
                 Console.WriteLine("Geef je geboortejaar:");
                 String geboortejaar = NonNullInput();
+                Console.Clear();
                 Console.WriteLine("Geef je taal: (nl/en)");
                 String taal = NonNullInput();
+                Console.Clear();
                 Console.WriteLine("Geef je telefoonnummer (bijv. 0612345678):");
                 string telefoonnummer = NonNullInput();
+                Console.Clear();
                 Console.WriteLine("Geef je weergavenaam: (Maximaal 20 tekens)");
                 String weergavenaam = NonNullInput();
+                Console.Clear();
                 Console.WriteLine("Geef je land: ");
                 String land = NonNullInput();
+                Console.Clear();
                 Console.WriteLine("Schrijf een bio: (Maximaal 200 tekens)");
                 String biografie = NonNullInput();
+                Console.Clear();
 
                 var nieuweGebruiker = new Gebruiker
                     (
