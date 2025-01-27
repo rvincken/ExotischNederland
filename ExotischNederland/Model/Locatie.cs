@@ -88,6 +88,11 @@ internal class Locatie
             "zuid-holland"
         };
 
+        if (provincie.Length > 15)
+        {
+            return false;
+        }
+
         return provincieNamen.Contains(provincie);
     }
 

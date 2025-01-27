@@ -1,0 +1,125 @@
+@startuml
+left to right direction
+class Soort {
+        - WetenschappelijkeNaam: string
+        - SoortNaam: string
+        - Oorsprong: char
+        - Type: string
+        - Categorie: string
+        - Id: int
+                + ToString()       
+}
+
+class Foto {
+        - Id: int 
+        - Afbeelding: byte_array
+                + WijzigAfbeelding()     
+                + LaadAfbeeldingVanPad()  
+                + ToString()
+}
+
+class Gebruiker {
+        - Naam: string
+        - Geslacht: char
+        - Taal: string 
+        - Email: string
+        - Weergavenaam: string
+        - Id: int
+        - Biografie: string 
+        - Geboortejaar: int 
+        - Telefoonnummer: long
+        - Land: string 
+        - Rol: string 
+                + ToString()       
+}
+
+class Locatie {
+        - Locatienaam: string
+        - Provincie: string 
+                + IsValidName()
+                + IsValidProvincie()
+                + WijzigProvincie()
+                + WijzigNaam()
+                + ToString()       
+}
+
+class Waarneming {
+        - Id: int 
+        - Waarnemer: Gebruiker
+        - Foto: Foto
+        - Locatie: Locatie
+        - Soort: Soort
+        - Omschrijving: string
+        - Datum: string
+        - Tijd: string
+                + IsValidDateOrTime()
+                + ToString()       
+}
+
+class SoortRepository {
+        - _connectionString: string
+}
+
+class FotoRepository {
+        - _connectionString: string
+}
+
+class GebruikerRepository {
+        - _connectionString: string
+}
+
+class LocatieRepository {
+        - _connectionString: string
+}
+
+class WaarnemingRepository {
+        - _connectionString: string
+        - _soortRepository: SoortRepository
+        - _fotoRepository: FotoRepository
+        - _gebruikerRepository: GebruikerRepository
+        - _locatieRepository: LocatieRepository
+}
+
+class SoortService {
+    - _repository: SoortRepository
+        + KrijgAlleSoorten()
+        + KrijgSoortVanId()
+        + KrijgSoortVanWetenschapNaam()
+}
+
+class FotoService {
+    - _repository: FotoRepository
+        + KrijgAlleFotos()
+        + KrijgFotoVanId()
+        + KrijgFotoVanByteArray()
+}
+
+class GebruikerService {
+    - _repository: GebruikerRepository
+        + KrijgAlleGebruikers()
+        + KrijgGebruikerVanId()
+}
+
+class LocatieService {
+    - _repository: LocatieRepository
+        + KrijgAlleLocaties()
+        + KrijgLocatieVanId()
+        + KrijgLocatieVanLocatieNaam()
+}
+
+class WaarnemingService {
+    - _repository: WaarnemingRepository
+        + KrijgAlleWaarnemingen()
+        + KrijgWaarnemingVanId()
+}
+
+Waarneming -- Foto
+Waarneming -- Soort
+Waarneming -- Gebruiker
+Waarneming -- Locatie
+WaarnemingRepository -- SoortService
+WaarnemingRepository -- FotoService
+WaarnemingRepository -- GebruikerService
+WaarnemingRepository -- LocatieService
+
+@enduml

@@ -532,6 +532,15 @@ internal class Program
 
     static void WaarnemingenVanPlaatsNaamBekijken()
     {
+        List<Locatie> locaties = locatieService.KrijgAlleLocaties();
+
+        
+        foreach (var locatie in locaties)
+        {
+            Console.WriteLine(locatie.Locatienaam);
+        }
+
+        Console.WriteLine("Hierboven staat een lijst van locaties waar waarnemingen voor zijn opgeslagen.");
         Console.WriteLine("Geef een plaatsnaam om op te filteren.");
         string plaatsnaam = NonNullInput();
 
